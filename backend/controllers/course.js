@@ -56,6 +56,12 @@ exports.createCourse = async (req, res) => {
 
         // upload thumbnail to cloudinary
         const thumbnailDetails = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
+        if (!thumbnailDetails) {
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to upload course thumbnail. Please check your Cloudinary configuration.'
+            });
+        }
 
         // create new course - entry in DB
         const newCourse = await Course.create({

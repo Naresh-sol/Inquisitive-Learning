@@ -15,7 +15,7 @@ const {
 } = endpoints
 
 // ================ send Otp ================
-export function sendOtp(email, navigate) {
+export function sendOtp(email, navigate, firstName = "") {
   return async (dispatch) => {
 
     const toastId = toast.loading("Loading...");
@@ -24,6 +24,7 @@ export function sendOtp(email, navigate) {
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
         email,
+        firstName,
         checkUserPresent: true,
       })
       // console.log("SENDOTP API RESPONSE ---> ", response)

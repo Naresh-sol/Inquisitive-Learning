@@ -8,15 +8,14 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const cookie = require('cookie');
 const mailSender = require('../utils/mailSender');
-const otpTemplate = require('../mail/templates/emailVerificationTemplate');
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 
 // ================ SEND-OTP For Email Verification ================
 exports.sendOTP = async (req, res) => {
     try {
 
-        // fetch email from re.body 
-        const { email } = req.body;
+        // fetch email and firstName from req.body 
+        const { email, firstName } = req.body;
 
         // check user already exist ?
         const checkUserPresent = await User.findOne({ email });
@@ -36,16 +35,8 @@ exports.sendOTP = async (req, res) => {
             lowerCaseAlphabets: false,
             specialChars: false
         })
-        // console.log('Your otp - ', otp);
-
-        const name = email.split('@')[0].split('.').map(part => part.replace(/\d+/g, '')).join(' ');
-        console.log(name);
-
-        // send otp in mail
-        await mailSender(email, 'OTP Verification Email', otpTemplate(otp, name));
-
         // create an entry for otp in DB
-        const otpBody = await OTP.create({ email, otp });
+        const otpBody = await OTP.create({ email, otp, name: firstName });
         // console.log('otpBody - ', otpBody);
 
 

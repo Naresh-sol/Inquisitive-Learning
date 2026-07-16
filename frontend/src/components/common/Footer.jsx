@@ -33,7 +33,12 @@ const Footer = () => {
           {/* Section 1 */}
           <div className="lg:w-[50%] flex flex-wrap flex-row justify-between lg:border-r lg:border-richblack-700 pl-3 lg:pr-5 gap-3">
             <div className="w-[30%] flex flex-col gap-3 lg:w-[30%] mb-7 lg:pl-0">
-              <img src={StudyNotionLogo} alt="" className="object-contain" />
+              <div className="flex items-center gap-x-2">
+                <img src={StudyNotionLogo} alt="Inquisitive learning" className="w-9 h-9 object-contain" />
+                <span className="text-xl font-bold tracking-wide font-inter text-richblack-50">
+                  Inquisitive learning
+                </span>
+              </div>
               <h1 className="text-richblack-50 font-semibold text-[16px]">Company</h1>
               <div className="flex flex-col gap-2">
                 {["About", "Careers", "Affiliates"].map((ele, i) => {

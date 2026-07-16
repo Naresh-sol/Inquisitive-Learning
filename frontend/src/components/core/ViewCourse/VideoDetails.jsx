@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom"
 import { useNavigate, useParams } from "react-router-dom"
 
 import "video-react/dist/video-react.css"
-import { BigPlayButton, Player } from "video-react"
+import { BigPlayButton, Player, ControlBar, PlaybackRateMenuButton } from "video-react"
 
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI"
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice"
@@ -165,74 +165,102 @@ const VideoDetails = () => {
 
 
       {!videoData ? (
-        <img
-          src={previewSource}
-          alt="Preview"
-          className="h-full w-full rounded-md object-cover"
-        />
+        <div className="mx-auto w-full max-w-[800px] aspect-video rounded-md overflow-hidden shadow-lg border border-richblack-700 bg-richblack-800">
+          <img
+            src={previewSource}
+            alt="Preview"
+            className="h-full w-full object-cover"
+          />
+        </div>
       ) : (
-        <Player
-          ref={playerRef}
-          aspectRatio="16:9"
-          playsInline
-          autoPlay
-          onEnded={() => setVideoEnded(true)}
-          src={videoData?.videoUrl}
-        >
-          <BigPlayButton position="center" />
-          {/* Render When Video Ends */}
-          {videoEnded && (
-            <div
-              style={{
-                backgroundImage:
-                  "linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
-              }}
-              className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter"
-            >
-              {!completedLectures.includes(subSectionId) && (
-                <IconBtn
-                  disabled={loading}
-                  onclick={() => handleLectureCompletion()}
-                  text={!loading ? "Mark As Completed" : "Loading..."}
-                  customClasses="text-xl max-w-max px-4 mx-auto"
-                />
-              )}
-              <IconBtn
-                disabled={loading}
-                onclick={() => {
-                  if (playerRef?.current) {
-                    // set the current time of the video to 0
-                    playerRef?.current?.seek(0)
-                    setVideoEnded(false)
-                  }
+        <div className="mx-auto w-full max-w-[800px] aspect-video rounded-md overflow-hidden shadow-lg border border-richblack-700 bg-richblack-900">
+          <Player
+            ref={playerRef}
+            aspectRatio="16:9"
+            playsInline
+            autoPlay
+            onEnded={() => setVideoEnded(true)}
+            src={videoData?.videoUrl}
+          >
+            <BigPlayButton position="center" />
+            <ControlBar>
+              <PlaybackRateMenuButton rates={[0.5, 1, 1.25, 1.5, 2]} order={7.1} />
+            </ControlBar>
+            {/* Render When Video Ends */}
+            {videoEnded && (
+              <div
+                style={{
+                  backgroundImage:
+                    "linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
                 }}
-                text="Rewatch"
-                customClasses="text-xl max-w-max px-4 mx-auto mt-2"
-              />
+                className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter"
+              >
+                {!completedLectures.includes(subSectionId) && (
+                  <IconBtn
+                    disabled={loading}
+                    onclick={() => handleLectureCompletion()}
+                    text={!loading ? "Mark As Completed" : "Loading..."}
+                    customClasses="text-xl max-w-max px-4 mx-auto"
+                  />
+                )}
+                <button
+                  onClick={() => {
+                    if (playerRef?.current) {
+                      // set the current time of the video to 0
+                      playerRef?.current?.seek(0)
+                      playerRef?.current?.play()
+                      setVideoEnded(false)
+                    }
+                  }}
+                  className="mx-auto mt-2 p-2 rounded-full hover:bg-richblack-800/40 transition-all duration-200"
+                  title="Rewatch"
+                >
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 24 24"
+                    height="60px"
+                    width="60px"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="cursor-pointer text-white hover:text-yellow-50 hover:scale-110 duration-200 transition-all"
+                  >
+                    <path
+                      d="M20 12a8 8 0 1 1-2.4-5.6M20 4v4h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path d="M10.5 8.5l5.5 3.5-5.5 3.5v-7z" />
+                  </svg>
+                </button>
 
-              <div className="mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl">
-                {!isFirstVideo() && (
-                  <button
-                    disabled={loading}
-                    onClick={goToPrevVideo}
-                    className="blackButton"
-                  >
-                    Prev
-                  </button>
-                )}
-                {!isLastVideo() && (
-                  <button
-                    disabled={loading}
-                    onClick={goToNextVideo}
-                    className="blackButton"
-                  >
-                    Next
-                  </button>
-                )}
+                <div className="mt-10 flex min-w-[250px] justify-center gap-x-4 text-xl">
+                  {!isFirstVideo() && (
+                    <button
+                      disabled={loading}
+                      onClick={goToPrevVideo}
+                      className="blackButton"
+                    >
+                      Prev
+                    </button>
+                  )}
+                  {!isLastVideo() && (
+                    <button
+                      disabled={loading}
+                      onClick={goToNextVideo}
+                      className="blackButton"
+                    >
+                      Next
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
-        </Player>
+            )}
+          </Player>
+        </div>
       )}
 
       <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>

@@ -18,6 +18,8 @@ const paymentRoutes = require('./routes/payments');
 const courseRoutes = require('./routes/course');
 
 
+const path = require('path');
+
 // middleware 
 app.use(express.json()); // to parse json body
 app.use(cookieParser());
@@ -31,7 +33,7 @@ app.use(
 app.use(
     fileUpload({
         useTempFiles: true,
-        tempFileDir: '/tmp'
+        tempFileDir: path.join(__dirname, 'tmp')
     })
 )
 

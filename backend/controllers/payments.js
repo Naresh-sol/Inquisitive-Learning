@@ -63,6 +63,19 @@ exports.capturePayment = async (req, res) => {
 
     // initiate payment using Rajorpay
     try {
+        if (process.env.RAZORPAY_KEY === 'rzp_test_placeholder' || !process.env.RAZORPAY_KEY) {
+            console.log("Local Dev Bypass Mode: Enrolling student directly without actual Razorpay gateway.");
+            await enrollStudents(coursesId, userId, res);
+            if (!res.headersSent) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Payment Verified",
+                    devBypass: true
+                });
+            }
+            return;
+        }
+
         const paymentResponse = await instance.instance.orders.create(options);
         // return response
         res.status(200).json({
@@ -72,7 +85,7 @@ exports.capturePayment = async (req, res) => {
     }
     catch (error) {
         console.log(error);
-        return res.status(500).json({ success: false, mesage: "Could not Initiate Order" });
+        return res.status(500).json({ success: false, message: "Could not Initiate Order" });
     }
 
 }

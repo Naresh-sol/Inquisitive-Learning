@@ -104,15 +104,17 @@ exports.getCategoryPageDetails = async (req, res) => {
             _id: { $ne: categoryId },
         })
 
-        let differentCategory = await Category.findOne(
-            categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
-                ._id
-        )
-            .populate({
-                path: "courses",
-                match: { status: "Published" },
-            })
-            .exec()
+        let differentCategory = null;
+        if (categoriesExceptSelected.length > 0) {
+            differentCategory = await Category.findOne(
+                categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]._id
+            )
+                .populate({
+                    path: "courses",
+                    match: { status: "Published" },
+                })
+                .exec();
+        }
 
         //console.log("Different COURSE", differentCategory)
         // Get top-selling courses across all categories

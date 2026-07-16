@@ -88,8 +88,11 @@ const Navbar = () => {
              {/* <nav className={` fixed flex items-center justify-center w-full h-16 z-[10] translate-y-0 transition-all text-white ${showNavbar}`}> */}
             <div className='flex w-11/12 max-w-maxContent items-center justify-between '>
                 {/* logo */}
-                <Link to="/">
-                    <img src={studyNotionLogo} width={160} height={42} loading='lazy' />
+                <Link to="/" className="flex items-center gap-x-2">
+                    <img src={studyNotionLogo} className="w-9 h-9 object-contain" loading='lazy' />
+                    <span className="text-xl font-bold tracking-wide font-inter text-richblack-25">
+                        Inquisitive learning
+                    </span>
                 </Link>
 
                 {/* Nav Links - visible for only large devices*/}

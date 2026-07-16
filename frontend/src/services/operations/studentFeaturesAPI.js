@@ -44,7 +44,16 @@ export async function buyCourse(token, coursesId, userDetails, navigate, dispatc
             })
         // console.log("orderResponse... ", orderResponse);
         if (!orderResponse.data.success) {
-            throw new Error(orderResponse.data.message);
+            throw new Error(orderResponse.data.message || orderResponse.data.mesage);
+        }
+
+        // If local dev bypass is enabled (directly enrolled)
+        if (orderResponse.data.devBypass) {
+            toast.success("Enrolled Successfully (Local Dev Bypass)");
+            navigate("/dashboard/enrolled-courses");
+            dispatch(resetCart());
+            toast.dismiss(toastId);
+            return;
         }
 
         const RAZORPAY_KEY = import.meta.env.VITE_APP_RAZORPAY_KEY;
@@ -81,8 +90,7 @@ export async function buyCourse(token, coursesId, userDetails, navigate, dispatc
     }
     catch (error) {
         console.log("PAYMENT API ERROR.....", error);
-        toast.error(error.response?.data?.message);
-        // toast.error("Could not make Payment");
+        toast.error(error.response?.data?.message || error.response?.data?.mesage || error.message);
     }
     toast.dismiss(toastId);
 }
