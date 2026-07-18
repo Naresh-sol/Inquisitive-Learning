@@ -5,48 +5,65 @@ import CTAButton from "../HomePage/Button"
 import { FaArrowRight } from 'react-icons/fa'
 import Img from './../../common/Img';
 
-
 import { motion } from 'framer-motion'
-import { scaleUp } from './../../common/motionFrameVarients';
+import { scaleUp, fadeIn } from './../../common/motionFrameVarients';
 
 
 const InstructorSection = () => {
   return (
-    <div>
-      <div className='flex flex-col-reverse lg:flex-row gap-10 lg:gap-20 items-center'>
+    <div className='py-16'>
+      <div className='flex flex-col-reverse lg:flex-row gap-12 lg:gap-20 items-center'>
 
         <motion.div
           variants={scaleUp}
           initial='hidden'
           whileInView={'show'}
           viewport={{ once: false, amount: 0.1 }}
-          className='lg:w-[50%] '>
+          className='lg:w-[50%]'>
           <Img
             src={Instructor}
             alt="Instructor"
-            className='shadow-white rounded-3xl'
+            className='shadow-white rounded-3xl w-full'
           />
         </motion.div>
 
-        <div className='lg:w-[50%] flex flex-col'>
-          <div className='text-3xl lg:text-4xl font-semobold w-[50%] mb-2'>
+        <motion.div
+          variants={fadeIn('left', 0.1)}
+          initial='hidden'
+          whileInView={'show'}
+          viewport={{ once: false, amount: 0.1 }}
+          className='lg:w-[50%] flex flex-col gap-6'
+        >
+          <div className='text-4xl lg:text-5xl font-bold text-white leading-tight'>
             Become an
-            <HighlightText text={"Instructor"} />
+            <HighlightText text={" Instructor"} />
           </div>
 
-          <p className='font-medium text-[16px] w-[80%] text-richblack-300 mb-12'>
-            Instructors from around the world teach millions of students on StudyNotion. We provide the tools and skills to teach what you love.
+          <p className='font-medium text-lg text-richblack-300 leading-relaxed'>
+            Instructors from around the world teach millions of students on Inquisitive Learning. We provide the tools and skills to teach what you love.
           </p>
 
-          <div className='w-fit'>
+          <ul className='flex flex-col gap-3 text-richblack-200 text-base'>
+            <li className='flex items-center gap-3'>
+              <span className='text-xl'>🎓</span> Share your expertise with eager learners
+            </li>
+            <li className='flex items-center gap-3'>
+              <span className='text-xl'>💰</span> Earn revenue from every enrolled student
+            </li>
+            <li className='flex items-center gap-3'>
+              <span className='text-xl'>🌍</span> Reach students across the globe
+            </li>
+          </ul>
+
+          <div className='w-fit mt-2'>
             <CTAButton active={true} linkto={"/signup"}>
-              <div className='flex flex-row gap-2 items-center'>
-                Start Learning Today
+              <div className='flex flex-row gap-2 items-center text-base'>
+                Start Teaching Today
                 <FaArrowRight />
               </div>
             </CTAButton>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </div>

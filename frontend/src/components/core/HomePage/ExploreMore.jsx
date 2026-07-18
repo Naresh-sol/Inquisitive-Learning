@@ -30,10 +30,10 @@ const ExploreMore = () => {
     <div>
       {/* Explore more section */}
       <div>
-        <div className="text-3xl lg:text-4xl font-semibold text-center my-10">
+        <div className="text-4xl lg:text-5xl font-bold text-center my-12">
           Unlock the
-          <HighlightText text={"Power of Code"} />
-          <p className="text-center text-richblack-300 text-base lg:text-lg font-semibold mt-1">
+          <HighlightText text={" Power of Code"} />
+          <p className="text-center text-richblack-300 text-lg lg:text-xl font-medium mt-3">
             Learn to Build Anything You Can Imagine
           </p>
         </div>
@@ -44,10 +44,10 @@ const ExploreMore = () => {
         {tabsName.map((ele, index) => {
           return (
             <div
-              className={` text-[16px] flex flex-row items-center gap-2 ${currentTab === ele
-                ? "bg-richblack-900 text-richblack-5 font-medium"
+              className={` text-base flex flex-row items-center gap-2 ${currentTab === ele
+                ? "bg-richblack-900 text-richblack-5 font-semibold"
                 : "text-richblack-200"
-                } px-7 py-[7px] rounded-full transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5`}
+                } px-8 py-2 rounded-full transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5`}
               key={index}
               onClick={() => setMyCards(ele)}
             >
