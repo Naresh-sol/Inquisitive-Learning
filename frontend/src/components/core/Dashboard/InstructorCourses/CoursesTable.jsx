@@ -67,20 +67,17 @@ export default function CoursesTable({ courses, setCourses, loading, setLoading 
 
   return (
     <>
-      <Table className="rounded-2xl border border-richblack-800 ">
+      <Table className="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
         {/* heading */}
         <Thead>
-          <Tr className="flex gap-x-10 rounded-t-3xl border-b border-b-richblack-800 px-6 py-2">
-            <Th className="flex-1 text-left text-sm font-medium uppercase text-richblack-100">
+          <Tr className="flex gap-x-10 rounded-t-3xl border-b border-b-gray-200 bg-gray-50 px-6 py-4">
+            <Th className="flex-1 text-left text-xs font-bold uppercase tracking-wider text-gray-500">
               Courses
             </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
-              Duration
-            </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+            <Th className="text-left text-xs font-bold uppercase tracking-wider text-gray-500">
               Price
             </Th>
-            <Th className="text-left text-sm font-medium uppercase text-richblack-100">
+            <Th className="text-left text-xs font-bold uppercase tracking-wider text-gray-500">
               Actions
             </Th>
           </Tr>
@@ -98,7 +95,7 @@ export default function CoursesTable({ courses, setCourses, loading, setLoading 
         <Tbody>
           {!loading && courses?.length === 0 ? (
             <Tr>
-              <Td className="py-10 text-center text-2xl font-medium text-richblack-100">
+              <Td className="py-10 text-center text-2xl font-medium text-gray-500">
                 No courses found
               </Td>
             </Tr>
@@ -107,19 +104,19 @@ export default function CoursesTable({ courses, setCourses, loading, setLoading 
               courses?.map((course) => (
                 <Tr
                   key={course._id}
-                  className="flex gap-x-10 border-b border-richblack-800 px-6 py-8"
+                  className="flex gap-x-10 border-b border-gray-200 px-6 py-8 hover:bg-gray-50 transition-colors"
                 >
                   <Td className="flex flex-1 gap-x-4 relative">
                     {/* course Thumbnail */}
                     <Img
                       src={course?.thumbnail}
                       alt={course?.courseName}
-                      className="h-[148px] min-w-[270px] max-w-[270px] rounded-lg object-cover"
+                      className="h-[148px] min-w-[270px] max-w-[270px] rounded-lg object-contain bg-white shadow-sm border border-gray-100"
                     />
 
                     <div className="flex flex-col">
-                      <p className="text-lg font-semibold text-richblack-5 capitalize">{course.courseName}</p>
-                      <p className="text-xs text-richblack-300 ">
+                      <p className="text-lg font-bold text-gray-900 capitalize">{course.courseName}</p>
+                      <p className="text-sm text-gray-500 mt-1">
                         {course.courseDescription.split(" ").length > TRUNCATE_LENGTH
                           ? course.courseDescription
                             .split(" ")
@@ -129,24 +126,24 @@ export default function CoursesTable({ courses, setCourses, loading, setLoading 
                       </p>
 
                       {/* created At */}
-                      <p className="text-[12px] text-richblack-100 mt-4">
+                      <p className="text-[12px] text-gray-400 mt-4 font-medium">
                         Created: {formatDate(course?.createdAt)}
                       </p>
 
                       {/* updated At */}
-                      <p className="text-[12px] text-richblack-100 ">
+                      <p className="text-[12px] text-gray-400 font-medium">
                         updated: {formatDate(course?.updatedAt)}
                       </p>
 
                       {/* course status */}
                       {course.status === COURSE_STATUS.DRAFT ? (
-                        <p className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-pink-100">
+                        <p className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-gray-100 px-3 py-[2px] text-[12px] font-bold text-gray-500">
                           <HiClock size={14} />
                           Drafted
                         </p>)
                         :
-                        (<div className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-richblack-700 px-2 py-[2px] text-[12px] font-medium text-yellow-100">
-                          <p className="flex h-3 w-3 items-center justify-center rounded-full bg-yellow-100 text-richblack-700">
+                        (<div className="mt-2 flex w-fit flex-row items-center gap-2 rounded-full bg-blue-50 px-3 py-[2px] text-[12px] font-bold text-[#0056D2]">
+                          <p className="flex h-3 w-3 items-center justify-center rounded-full bg-[#0056D2] text-white">
                             <FaCheck size={8} />
                           </p>
                           Published
@@ -155,17 +152,15 @@ export default function CoursesTable({ courses, setCourses, loading, setLoading 
                     </div>
                   </Td>
 
-                  {/* course duration */}
-                  <Td className="text-sm font-medium text-richblack-100">2hr 30min</Td>
-                  <Td className="text-sm font-medium text-richblack-100">₹{course.price}</Td>
+                  <Td className="text-sm font-bold text-gray-900">₹{course.price}</Td>
 
-                  <Td className="text-sm font-medium text-richblack-100 ">
+                  <Td className="text-sm font-medium text-gray-400">
                     {/* Edit button */}
                     <button
                       disabled={loading}
                       onClick={() => { navigate(`/dashboard/edit-course/${course._id}`) }}
                       title="Edit"
-                      className="px-2 transition-all duration-200 hover:scale-110 hover:text-caribbeangreen-300"
+                      className="px-2 transition-all duration-200 hover:scale-110 hover:text-[#0056D2]"
                     >
                       <FiEdit2 size={20} />
                     </button>

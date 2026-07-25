@@ -33,8 +33,8 @@ export default function UpdatePassword() {
   return (
     <>
       <form onSubmit={handleSubmit(submitPasswordForm)}>
-        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-6 sm:px-12">
-          <h2 className="text-lg font-semibold text-richblack-5">Password</h2>
+        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-200 bg-white shadow-sm p-8 px-6 sm:px-12">
+          <h2 className="text-lg font-semibold text-richblack-900">Password</h2>
 
           <div className="flex flex-col gap-5 lg:flex-row">
           {/* Current Password */}
@@ -64,7 +64,7 @@ export default function UpdatePassword() {
               </span>
 
               {errors.oldPassword && (
-                <span className="-mt-1 text-[12px] text-yellow-100">
+                <span className="-mt-1 text-[12px] text-pink-600">
                   Please enter your Current Password.
                 </span>
               )}
@@ -96,7 +96,7 @@ export default function UpdatePassword() {
                 )}
               </span>
               {errors.newPassword && (
-                <span className="-mt-1 text-[12px] text-yellow-100">
+                <span className="-mt-1 text-[12px] text-pink-600">
                   Please enter your New Password.
                 </span>
               )}
@@ -128,7 +128,7 @@ export default function UpdatePassword() {
                 )}
               </span>
               {errors.confirmNewPassword && (
-                <span className="-mt-1 text-[12px] text-yellow-100">
+                <span className="-mt-1 text-[12px] text-pink-600">
                   Please enter your Confirm New Password.
                 </span>
               )}
@@ -140,7 +140,7 @@ export default function UpdatePassword() {
         <div className="flex justify-end gap-2">
           <button
             onClick={() => { navigate("/dashboard/my-profile") }}
-            className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
+            className="cursor-pointer rounded-md bg-gray-200 py-2 px-5 font-semibold text-richblack-900 hover:bg-gray-300 transition-colors"
           >
             Cancel
           </button>

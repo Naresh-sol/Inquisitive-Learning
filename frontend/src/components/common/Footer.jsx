@@ -25,16 +25,16 @@ const Community = ["Forums", "Chapters", "Events"];
 
 const Footer = () => {
   return (
-    <div className="bg-richblack-800 mx-7 rounded-3xl mb-10">
+    <div className="bg-[#1c1d1f] w-full">
       
       {/* Upper Footer Columns */}
-      <div className="flex flex-col lg:flex-row gap-10 items-start justify-between w-11/12 max-w-maxContent text-richblack-400 leading-6 mx-auto py-14">
+      <div className="flex flex-col lg:flex-row gap-10 items-start justify-between w-11/12 max-w-maxContent text-[#b0b2c3] leading-6 mx-auto py-14">
         
         {/* Left Column: Branding / Identity */}
         <div className="w-full lg:w-[25%] flex flex-col gap-3">
           <div className="flex items-center gap-x-2">
             <img src={StudyNotionLogo} alt="Inquisitive learning" className="w-9 h-9 object-contain" />
-            <span className="text-xl font-bold tracking-wide font-inter text-richblack-50">
+            <span className="text-xl font-bold tracking-wide font-inter text-white">
               Inquisitive learning
             </span>
           </div>
@@ -45,8 +45,8 @@ const Footer = () => {
           
           {/* Column 1: Support */}
           <div className="w-[45%] sm:w-[25%] mb-7 flex flex-col gap-3">
-            <h1 className="text-richblack-50 font-semibold text-[16px]">Support</h1>
-            <div className="text-[14px] cursor-pointer hover:text-richblack-50 transition-all duration-200 mt-1">
+            <h1 className="text-white font-semibold text-[16px]">Support</h1>
+            <div className="text-[14px] cursor-pointer hover:text-white transition-all duration-200 mt-1">
               <Link to={"/help-center"}>Help Center</Link>
             </div>
           </div>
@@ -55,7 +55,7 @@ const Footer = () => {
           {FooterLink2.map((ele, i) => {
             return (
               <div key={i} className="w-[45%] sm:w-[30%] mb-7">
-                <h1 className="text-richblack-50 font-semibold text-[16px]">
+                <h1 className="text-white font-semibold text-[16px]">
                   {ele.title}
                 </h1>
                 <div className="flex flex-col gap-2 mt-3">
@@ -63,7 +63,7 @@ const Footer = () => {
                     return (
                       <div
                         key={index}
-                        className="text-[14px] cursor-pointer hover:text-richblack-50 transition-all duration-200"
+                        className="text-[14px] cursor-pointer hover:text-white transition-all duration-200"
                       >
                         <Link to={link.link}>{link.title}</Link>
                       </div>
@@ -81,7 +81,7 @@ const Footer = () => {
       <div className="border-b border-richblack-700 w-11/12 mx-auto mb-6"></div>
 
       {/* Bottom Footer */}
-      <div className="flex flex-row items-center justify-between w-11/12 max-w-maxContent text-richblack-400 mx-auto pb-14 text-sm">
+      <div className="flex flex-row items-center justify-between w-11/12 max-w-maxContent text-[#b0b2c3] mx-auto pb-14 text-sm">
         <div className="flex justify-between lg:items-start items-center flex-col lg:flex-row gap-3 w-full">
           <div className="flex">
             {BottomFooter.map((ele, ind) => {
@@ -89,7 +89,7 @@ const Footer = () => {
                 <div
                   key={ind}
                   className={` ${BottomFooter.length - 1 === ind ? "" : "border-r border-richblack-700 "}
-                   px-3 cursor-pointer hover:text-richblack-50 transition-all duration-200`}
+                   px-3 cursor-pointer hover:text-white transition-all duration-200`}
                 >
                   <Link to={ele.split(" ").join("-").toLocaleLowerCase()}>
                     {ele}

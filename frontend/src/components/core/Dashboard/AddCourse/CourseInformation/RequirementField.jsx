@@ -39,9 +39,11 @@ export default function RequirementsField({ name, label, register, setValue, err
 
   return (
     <div className="flex flex-col space-y-2">
-      <label className="text-sm text-richblack-5" htmlFor={name}>
-        {label} <sup className="text-pink-200">*</sup>
-      </label>
+      {label && (
+        <label className="text-sm text-richblack-900 font-medium" htmlFor={name}>
+          {label} <sup className="text-red-500">*</sup>
+        </label>
+      )}
 
       <div className="flex flex-col items-start space-y-2">
         <input
@@ -49,29 +51,30 @@ export default function RequirementsField({ name, label, register, setValue, err
           id={name}
           value={requirement}
           onChange={(e) => setRequirement(e.target.value)}
-          className="form-style w-full"
+          placeholder="e.g. A laptop with internet connection"
+          className="w-full rounded-xl bg-gray-50/50 border border-gray-200 px-4 py-3 text-richblack-900 outline-none focus:bg-white focus:border-[#0056D2] focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm placeholder:text-gray-400"
         />
         <button
           type="button"
           onClick={handleAddRequirement}
-          className="font-semibold text-yellow-50"
+          className="font-bold text-[#0056D2] text-sm flex items-center justify-center border-2 border-dashed border-[#0056D2]/30 px-4 py-2.5 rounded-xl hover:bg-blue-50/50 hover:border-[#0056D2] w-full transition-all mt-2"
         >
-          Add
+          <span className="mr-2 text-lg">+</span> Add another objective
         </button>
       </div>
 
       {requirementsList.length > 0 && (
         <ul className="mt-2 list-inside list-disc">
           {requirementsList.map((requirement, index) => (
-            <li key={index} className="flex items-center text-richblack-5">
+            <li key={index} className="flex items-center text-richblack-900 font-medium text-sm py-1">
               <span>{requirement}</span>
               <button
                 type="button"
-                className="ml-2 text-xs text-pure-greys-300 "
+                className="ml-2 text-xs text-red-500 opacity-60 hover:opacity-100 transition-opacity"
                 onClick={() => handleRemoveRequirement(index)}
               >
                 {/* clear  */}
-                <RiDeleteBin6Line className="text-pink-200 text-sm hover:scale-125 duration-200" />
+                <RiDeleteBin6Line className="text-sm duration-200" />
               </button>
             </li>
           ))}
@@ -79,8 +82,8 @@ export default function RequirementsField({ name, label, register, setValue, err
       )}
 
       {errors[name] && (
-        <span className="ml-2 text-xs tracking-wide text-pink-200">
-          {label} is required
+        <span className="ml-1 text-xs font-semibold text-red-500">
+          {label || "This field"} is required
         </span>
       )}
     </div>

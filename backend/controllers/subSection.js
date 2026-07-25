@@ -8,7 +8,7 @@ const { uploadImageToCloudinary } = require('../utils/imageUploader');
 exports.createSubSection = async (req, res) => {
     try {
         // extract data
-        const { title, description, sectionId } = req.body;
+        const { title, description, sectionId, lectureNotesUrl } = req.body;
 
         // extract video file
         const videoFile = req.files.video
@@ -27,7 +27,7 @@ exports.createSubSection = async (req, res) => {
 
         // create entry in DB
         const SubSectionDetails = await SubSection.create(
-            { title, timeDuration: videoFileDetails.duration, description, videoUrl: videoFileDetails.secure_url })
+            { title, timeDuration: videoFileDetails.duration, description, videoUrl: videoFileDetails.secure_url, lectureNotesUrl })
 
         // link subsection id to section
         // Update the corresponding section with the newly created sub-section
@@ -60,7 +60,7 @@ exports.createSubSection = async (req, res) => {
 // ================ Update SubSection ================
 exports.updateSubSection = async (req, res) => {
     try {
-        const { sectionId, subSectionId, title, description } = req.body;
+        const { sectionId, subSectionId, title, description, lectureNotesUrl } = req.body;
 
         // validation
         if (!subSectionId) {
@@ -87,6 +87,10 @@ exports.updateSubSection = async (req, res) => {
 
         if (description) {
             subSection.description = description;
+        }
+
+        if (lectureNotesUrl !== undefined) {
+            subSection.lectureNotesUrl = lectureNotesUrl;
         }
 
         // upload video to cloudinary

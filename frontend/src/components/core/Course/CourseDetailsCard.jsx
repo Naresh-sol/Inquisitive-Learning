@@ -53,7 +53,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
   return (
     <>
       <div
-        className={`flex flex-col gap-4 rounded-2xl bg-richblack-700 p-4 text-richblack-5 `}
+        className={`flex flex-col gap-4 rounded-2xl bg-white border border-gray-200 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] p-4 text-richblack-900`}
       >
         {/* Course Image */}
         <Img
@@ -68,7 +68,7 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
           </div>
           <div className="flex flex-col gap-4">
             <button
-              className="yellowButton outline-none"
+              className="w-full bg-[#0056D2] hover:bg-[#004bb5] text-white py-3 rounded-md font-semibold transition-colors outline-none"
               onClick={
                 user && course?.studentsEnrolled.includes(user?._id)
                   ? () => navigate("/dashboard/enrolled-courses")
@@ -80,21 +80,17 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
                 : "Buy Now"}
             </button>
             {(!user || !course?.studentsEnrolled.includes(user?._id)) && (
-              <button onClick={handleAddToCart} className="blackButton outline-none">
+              <button onClick={handleAddToCart} className="w-full bg-white border border-[#0056D2] text-[#0056D2] hover:bg-gray-50 py-3 rounded-md font-semibold transition-colors outline-none">
                 Add to Cart
               </button>
             )}
           </div>
 
-          <p className="pb-3 pt-6 text-center text-sm text-richblack-25">
-            30-Day Money-Back Guarantee
-          </p>
-
           <div className={``}>
-            <p className={`my-2 text-xl font-semibold `}>
+            <p className={`my-2 text-lg font-semibold text-richblack-900`}>
               Course Requirements :
             </p>
-            <div className="flex flex-col gap-3 text-sm text-caribbeangreen-100">
+            <div className="flex flex-col gap-3 text-sm text-richblack-600 mt-4">
               {course?.instructions?.map((item, i) => {
                 return (
                   <p className={`flex gap-2`} key={i}>
@@ -106,12 +102,12 @@ function CourseDetailsCard({ course, setConfirmationModal, handleBuyCourse }) {
             </div>
           </div>
 
-          <div className="text-center">
+          <div className="text-center mt-4">
             <button
-              className="mx-auto flex items-center gap-2 py-6 text-yellow-100 "
+              className="mx-auto flex items-center gap-2 py-4 text-[#0056D2] hover:text-[#004bb5] font-semibold transition-colors"
               onClick={handleShare}
             >
-              <FaShareSquare size={15} /> Share
+              <FaShareSquare size={16} /> Share
             </button>
           </div>
         </div>

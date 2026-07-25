@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { HiOutlineCurrencyRupee } from "react-icons/hi"
 import { MdNavigateNext } from "react-icons/md"
+import { FiInfo, FiTarget, FiList, FiCheckCircle, FiArrowRight, FiSave, FiEye, FiImage } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
 
 import { addCourseDetails, editCourseDetails, fetchCourseCategories } from "../../../../../services/operations/courseDetailsAPI"
@@ -15,10 +16,11 @@ import RequirementsField from "./RequirementField"
 
 export default function CourseInformationForm() {
 
-  const { register, handleSubmit, setValue, getValues, formState: { errors } } = useForm()
+  const { register, handleSubmit, setValue, getValues, watch, formState: { errors } } = useForm()
 
   const dispatch = useDispatch()
   const { token } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.profile)
   const { course, editCourse } = useSelector((state) => state.course)
   const [loading, setLoading] = useState(false)
   const [courseCategories, setCourseCategories] = useState([])
@@ -45,6 +47,7 @@ export default function CourseInformationForm() {
       setValue("courseCategory", course.category)
       setValue("courseRequirements", course.instructions)
       setValue("courseImage", course.thumbnail)
+      setValue("courseDifficulty", course.difficulty || "All Levels")
     }
 
     getCategories()
@@ -63,6 +66,7 @@ export default function CourseInformationForm() {
       currentValues.courseBenefits !== course.whatYouWillLearn ||
       currentValues.courseCategory._id !== course.category._id ||
       currentValues.courseRequirements.toString() !== course.instructions.toString() ||
+      currentValues.courseDifficulty !== (course.difficulty || "All Levels") ||
       currentValues.courseImage !== course.thumbnail) {
       return true
     }
@@ -105,6 +109,9 @@ export default function CourseInformationForm() {
         if (currentValues.courseRequirements.toString() !== course.instructions.toString()) {
           formData.append("instructions", JSON.stringify(data.courseRequirements))
         }
+        if (currentValues.courseDifficulty !== (course.difficulty || "All Levels")) {
+          formData.append("difficulty", data.courseDifficulty)
+        }
         if (currentValues.courseImage !== course.thumbnail) {
           formData.append("thumbnailImage", data.courseImage)
         }
@@ -131,6 +138,7 @@ export default function CourseInformationForm() {
     formData.append("tag", JSON.stringify(data.courseTags))
     formData.append("whatYouWillLearn", data.courseBenefits)
     formData.append("category", data.courseCategory)
+    formData.append("difficulty", data.courseDifficulty)
     formData.append("status", COURSE_STATUS.DRAFT)
     formData.append("instructions", JSON.stringify(data.courseRequirements))
     formData.append("thumbnailImage", data.courseImage)
@@ -143,168 +151,232 @@ export default function CourseInformationForm() {
     setLoading(false)
   }
 
+  const currentTitle = watch("courseTitle");
+  const currentDesc = watch("courseShortDesc");
+
+  const inputClasses = "w-full rounded-xl bg-gray-50/50 border border-gray-200 px-4 py-3 text-richblack-900 outline-none focus:bg-white focus:border-[#0056D2] focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm placeholder:text-gray-400";
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6 "
+      className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-16 mt-8"
     >
-      {/* Course Title */}
-      <div className="flex flex-col space-y-2">
-        <label className="text-sm text-richblack-5" htmlFor="courseTitle">
-          Course Title <sup className="text-pink-200">*</sup>
-        </label>
-        <input
-          id="courseTitle"
-          placeholder="Enter Course Title"
-          {...register("courseTitle", { required: true })}
-          className="form-style w-full"
-        />
-        {errors.courseTitle && (
-          <span className="ml-2 text-xs tracking-wide text-pink-200">
-            Course title is required
-          </span>
-        )}
-      </div>
+      {/* Left Column */}
+      <div className="lg:col-span-2 space-y-6">
+        
+        {/* Basic Details */}
+        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-8">
+          <div className="flex items-center gap-3 mb-8">
+            <FiInfo className="text-[#0056D2] text-2xl" />
+            <h2 className="text-2xl font-extrabold text-richblack-900 tracking-tight">Basic Details</h2>
+          </div>
 
-      {/* Course Short Description */}
-      <div className="flex flex-col space-y-2">
-        <label className="text-sm text-richblack-5" htmlFor="courseShortDesc">
-          Course Short Description <sup className="text-pink-200">*</sup>
-        </label>
-        <textarea
-          id="courseShortDesc"
-          placeholder="Enter Description"
-          {...register("courseShortDesc", { required: true })}
-          className="form-style resize-x-none min-h-[130px] w-full ] "
-        />
-        {errors.courseShortDesc && (
-          <span className="ml-2 text-xs tracking-wide text-pink-200">
-            Course Description is required
-          </span>
-        )}
-      </div>
+          <div className="space-y-6">
+            {/* Course Title */}
+            <div className="flex flex-col space-y-2">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-widest" htmlFor="courseTitle">
+                Course Title <sup className="text-red-500">*</sup>
+              </label>
+              <input
+                id="courseTitle"
+                placeholder="e.g. Masterclass in Advanced Digital Strategy"
+                {...register("courseTitle", { required: true })}
+                className={inputClasses}
+              />
+              {errors.courseTitle && (
+                <span className="ml-1 text-xs font-semibold text-red-500">Course title is required</span>
+              )}
+            </div>
 
-      {/* Course Price */}
-      <div className="flex flex-col space-y-2">
-        <label className="text-sm text-richblack-5" htmlFor="coursePrice">
-          Course Price <sup className="text-pink-200">*</sup>
-        </label>
-        <div className="relative">
-          <input
-            id="coursePrice"
-            placeholder="Enter Course Price"
-            {...register("coursePrice", {
-              required: true,
-              valueAsNumber: true,
-              pattern: {
-                value: /^(0|[1-9]\d*)(\.\d+)?$/,
-              },
-            })}
-            className="form-style w-full !pl-12"
+            {/* Course Short Description */}
+            <div className="flex flex-col space-y-2">
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-widest" htmlFor="courseShortDesc">
+                Short Description <sup className="text-red-500">*</sup>
+              </label>
+              <textarea
+                id="courseShortDesc"
+                placeholder="Provide a compelling 160-character summary that captures attention."
+                {...register("courseShortDesc", { required: true })}
+                className={`${inputClasses} min-h-[120px] resize-none`}
+              />
+              {errors.courseShortDesc && (
+                <span className="ml-1 text-xs font-semibold text-red-500">Course Description is required</span>
+              )}
+            </div>
 
-          />
-          <HiOutlineCurrencyRupee className="absolute left-3 top-1/2 inline-block -translate-y-1/2 text-2xl text-richblack-400" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Course Category */}
+              <div className="flex flex-col space-y-2">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest" htmlFor="courseCategory">
+                  Category <sup className="text-red-500">*</sup>
+                </label>
+                <select
+                  {...register("courseCategory", { required: true })}
+                  defaultValue=""
+                  id="courseCategory"
+                  className={`${inputClasses} cursor-pointer appearance-none`}
+                >
+                  <option value="" disabled>Select a category</option>
+                  {!loading && courseCategories?.map((category, indx) => (
+                    <option key={indx} value={category?._id}>{category?.name}</option>
+                  ))}
+                </select>
+                {errors.courseCategory && (
+                  <span className="ml-1 text-xs font-semibold text-red-500">Course Category is required</span>
+                )}
+              </div>
+
+              {/* Difficulty Level */}
+              <div className="flex flex-col space-y-2">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest" htmlFor="courseDifficulty">
+                  Difficulty <sup className="text-red-500">*</sup>
+                </label>
+                <select
+                  {...register("courseDifficulty", { required: true })}
+                  defaultValue="All Levels"
+                  id="courseDifficulty"
+                  className={`${inputClasses} cursor-pointer appearance-none`}
+                >
+                  <option value="All Levels">All Levels</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+                {errors.courseDifficulty && (
+                  <span className="ml-1 text-xs font-semibold text-red-500">Difficulty is required</span>
+                )}
+              </div>
+
+              {/* Course Price */}
+              <div className="flex flex-col space-y-2">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-widest" htmlFor="coursePrice">
+                  Price (USD) <sup className="text-red-500">*</sup>
+                </label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-bold">$</span>
+                  <input
+                    id="coursePrice"
+                    placeholder="0.00"
+                    {...register("coursePrice", {
+                      required: true,
+                      valueAsNumber: true,
+                      pattern: { value: /^(0|[1-9]\d*)(\.\d+)?$/ },
+                    })}
+                    className={`${inputClasses} pl-8`}
+                  />
+                </div>
+                {errors.coursePrice && (
+                  <span className="ml-1 text-xs font-semibold text-red-500">Course Price is required</span>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-        {errors.coursePrice && (
-          <span className="ml-2 text-xs tracking-wide text-pink-200">
-            Course Price is required
-          </span>
-        )}
+
+        {/* Learning Objectives */}
+        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <FiTarget className="text-[#0056D2] text-2xl" />
+            <h2 className="text-2xl font-extrabold text-richblack-900 tracking-tight">Learning Objectives</h2>
+          </div>
+          <p className="text-gray-500 font-medium text-sm mb-6">What will your students be able to do after finishing this course?</p>
+          
+          <div className="flex flex-col space-y-2">
+            <textarea
+              id="courseBenefits"
+              placeholder="e.g. Master the art of user persona creation&#10;e.g. Build interactive prototypes in Figma"
+              {...register("courseBenefits", { required: true })}
+              className={`${inputClasses} min-h-[140px] resize-none`}
+            />
+            {errors.courseBenefits && (
+              <span className="ml-1 text-xs font-semibold text-red-500">Benefits of the course is required</span>
+            )}
+          </div>
+        </div>
+
+        {/* Requirements */}
+        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-8">
+          <div className="flex items-center gap-3 mb-4">
+            <FiList className="text-[#0056D2] text-2xl" />
+            <h2 className="text-2xl font-extrabold text-richblack-900 tracking-tight">Requirements & Instructions</h2>
+          </div>
+          <p className="text-gray-500 font-medium text-sm mb-6">Mention necessary software, prior knowledge, or physical tools students need before starting.</p>
+          
+          <RequirementsField
+            name="courseRequirements"
+            label=""
+            register={register}
+            setValue={setValue}
+            errors={errors}
+          />
+        </div>
+
+        {/* Sticky Actions */}
+        <div className="flex justify-end gap-4 mt-8">
+           {editCourse && (
+              <button
+                type="button"
+                onClick={() => dispatch(setStep(2))}
+                disabled={loading}
+                className="bg-gray-100 text-gray-600 py-3 px-8 rounded-xl font-bold text-sm hover:bg-gray-200 transition-all"
+              >
+                Skip
+              </button>
+           )}
+           <button 
+             type="submit" 
+             disabled={loading}
+             className="bg-[#0056D2] text-white py-3 px-8 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-blue-500/30 hover:bg-[#0043A4] transition-all disabled:opacity-70 group"
+           >
+              <span>{editCourse ? "Save & Continue" : "Next: Curriculum Builder"}</span>
+              <FiArrowRight className="text-xl group-hover:translate-x-1 transition-transform" />
+           </button>
+        </div>
       </div>
 
-      {/* Course Category */}
-      <div className="flex flex-col space-y-2 ">
-        <label className="text-sm text-richblack-5" htmlFor="courseCategory">
-          Course Category <sup className="text-pink-200">*</sup>
-        </label>
-        <select
-          {...register("courseCategory", { required: true })}
-          defaultValue=""
-          id="courseCategory"
-          className="form-style w-full cursor-pointer"
-        >
-          <option value="" disabled>
-            Choose a Category
-          </option>
-          {!loading &&
-            courseCategories?.map((category, indx) => (
-              <option key={indx} value={category?._id}>
-                {category?.name}
-              </option>
-            ))}
-        </select>
-        {errors.courseCategory && (
-          <span className="ml-2 text-xs tracking-wide text-pink-200">
-            Course Category is required
-          </span>
-        )}
-      </div>
+      {/* Right Column */}
+      <div className="lg:col-span-1 space-y-6">
 
-      {/* Course Tags */}
-      <ChipInput
-        label="Tags"
-        name="courseTags"
-        placeholder="Enter Tags and press Enter or Comma"
-        register={register}
-        errors={errors}
-        setValue={setValue}
-      />
+        {/* Pro-Tip */}
+        <div className="bg-[#0056D2]/5 rounded-3xl p-6 border border-[#0056D2]/10">
+          <div className="flex items-start gap-4">
+            <FiCheckCircle className="text-[#0056D2] text-2xl shrink-0 mt-0.5" />
+            <div>
+              <h4 className="font-extrabold text-[#0056D2] text-sm mb-1">Pro-Tip</h4>
+              <p className="text-xs font-medium text-[#0056D2]/80 leading-relaxed">A compelling description increases enrollment by 30%. Focus on student outcomes!</p>
+            </div>
+          </div>
+        </div>
 
-      {/* Course Thumbnail Image */}
-      <Upload
-        name="courseImage"
-        label="Course Thumbnail"
-        register={register}
-        setValue={setValue}
-        errors={errors}
-        editData={editCourse ? course?.thumbnail : null}
-      />
+        {/* Course Tags & Media wrapper */}
+        <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-6 space-y-8">
+           
+           <div>
+             <h4 className="font-bold text-richblack-900 text-xs uppercase tracking-widest mb-4">Course Tags</h4>
+             <ChipInput
+                label=""
+                name="courseTags"
+                placeholder="Add tag..."
+                register={register}
+                errors={errors}
+                setValue={setValue}
+              />
+              <p className="text-[10px] text-gray-400 mt-2">Press enter to add. Used for discoverability.</p>
+           </div>
 
-      {/* Benefits of the course */}
-      <div className="flex flex-col space-y-2">
-        <label className="text-sm text-richblack-5" htmlFor="courseBenefits">
-          Benefits of the course <sup className="text-pink-200">*</sup>
-        </label>
-        <textarea
-          id="courseBenefits"
-          placeholder="Enter benefits of the course"
-          {...register("courseBenefits", { required: true })}
-          className="form-style resize-x-none min-h-[130px] w-full"
-        />
-        {errors.courseBenefits && (
-          <span className="ml-2 text-xs tracking-wide text-pink-200">
-            Benefits of the course is required
-          </span>
-        )}
-      </div>
+           <div>
+             <h4 className="font-bold text-richblack-900 text-xs uppercase tracking-widest mb-4">Course Thumbnail</h4>
+             <Upload
+                name="courseImage"
+                label=""
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                editData={editCourse ? course?.thumbnail : null}
+              />
+           </div>
+        </div>
 
-      {/* Requirements/Instructions */}
-      <RequirementsField
-        name="courseRequirements"
-        label="Requirements/Instructions"
-        register={register}
-        setValue={setValue}
-        errors={errors}
-      />
-
-      {/* Next Button */}
-      <div className="flex justify-end gap-x-2">
-        {editCourse && (
-          <button
-            onClick={() => dispatch(setStep(2))}
-            disabled={loading}
-            className={`flex cursor-pointer items-center gap-x-2 rounded-md py-[8px] px-[20px] font-semibold
-              text-richblack-900 bg-richblack-300 hover:bg-richblack-900 hover:text-richblack-300 duration-300`}
-          >
-            Continue Wihout Saving
-          </button>
-        )}
-        <IconBtn
-          disabled={loading}
-          text={!editCourse ? "Next" : "Save Changes"}
-        >
-          <MdNavigateNext />
-        </IconBtn>
       </div>
     </form>
   )

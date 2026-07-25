@@ -74,7 +74,7 @@ function ReviewSlider() {
           {reviews.map((review, i) => {
             return (
               <SwiperSlide key={i}>
-                <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25 min-h-[180px] max-h-[180px] glass-bg">
+                <div className="flex flex-col gap-3 bg-white border border-gray-200 rounded-lg p-3 text-[14px] text-richblack-900 min-h-[180px] max-h-[180px] shadow-sm">
                   <div className="flex items-center gap-4">
                     <Img
                       src={
@@ -86,14 +86,14 @@ function ReviewSlider() {
                       className="h-9 w-9 rounded-full object-cover"
                     />
                     <div className="flex flex-col">
-                      <h1 className="font-semibold text-richblack-5 capitalize">{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
+                      <h1 className="font-semibold text-richblack-900 capitalize">{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
                       <h2 className="text-[12px] font-medium text-richblack-500">
                         {review?.course?.courseName}
                       </h2>
                     </div>
                   </div>
 
-                  <p className="font-medium text-richblack-25">
+                  <p className="font-medium text-richblack-600">
                     {review?.review.split(" ").length > truncateWords
                       ? `${review?.review
                         .split(" ")
@@ -103,7 +103,7 @@ function ReviewSlider() {
                   </p>
 
                   <div className="flex items-center gap-2 ">
-                    <h3 className="font-semibold text-yellow-100">
+                    <h3 className="font-semibold text-yellow-500">
                       {/* {isNaN(review.rating) ? "N/A" : review.rating.toFixed(1)} */}
                       {review.rating}
                     </h3>

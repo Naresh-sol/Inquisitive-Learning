@@ -49,13 +49,15 @@ export default function Upload({ name, label, register, setValue, errors, video 
 
   return (
     <div className="flex flex-col space-y-2">
-      <label className="text-sm text-richblack-5" htmlFor={name}>
-        {label} {!viewData && <sup className="text-pink-200">*</sup>}
-      </label>
+      {label && (
+        <label className="text-sm text-richblack-900 font-medium" htmlFor={name}>
+          {label} {!viewData && <sup className="text-red-500">*</sup>}
+        </label>
+      )}
 
       <div
-        className={`${isDragActive ? "bg-richblack-600" : "bg-richblack-700"}
-         flex min-h-[250px] cursor-pointer items-center justify-center rounded-md border-2 border-dotted border-richblack-500`}
+        className={`${isDragActive ? "bg-gray-100" : "bg-gray-50/50"}
+         flex min-h-[220px] cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed border-gray-200 hover:border-[#0056D2] transition-all`}
       >
         {previewSource ? (
           <div className="flex w-full flex-col p-6">
@@ -77,9 +79,9 @@ export default function Upload({ name, label, register, setValue, errors, video 
                   setSelectedFile(null)
                   setValue(name, null)
                 }}
-                className="mt-3 text-richblack-400 underline"
+                className="mt-3 text-sm font-semibold text-red-500 hover:underline"
               >
-                Cancel
+                Remove
               </button>
             )}
           </div>
@@ -89,25 +91,24 @@ export default function Upload({ name, label, register, setValue, errors, video 
             {...getRootProps()}
           >
             <input {...getInputProps()} ref={inputRef} />
-            <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
-              <FiUploadCloud className="text-2xl text-yellow-50" />
+            <div className="grid aspect-square w-14 place-items-center rounded-full bg-[#0056D2]/10 mb-2">
+              <FiUploadCloud className="text-2xl text-[#0056D2]" />
             </div>
-            <p className="mt-2 max-w-[200px] text-center text-sm text-richblack-200">
+            <p className="mt-2 max-w-[200px] text-center text-sm text-gray-500 font-medium">
               Drag and drop an {!video ? "image" : "video"}, or click to{" "}
-              <span className="font-semibold text-yellow-50">Browse</span> a
-              file
+              <span className="font-bold text-[#0056D2]">Browse</span>
             </p>
-            <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-richblack-200">
-              <li>Aspect ratio 16:9</li>
-              <li>Recommended size 1024x576</li>
+            <ul className="mt-6 flex list-none justify-between space-x-6 text-center text-xs font-semibold text-gray-400">
+              <li>16:9 Aspect Ratio</li>
+              <li>1024x576 Recommended</li>
             </ul>
           </div>
         )}
       </div>
 
       {errors[name] && (
-        <span className="ml-2 text-xs tracking-wide text-pink-200">
-          {label} is required
+        <span className="ml-1 text-xs font-semibold text-red-500">
+          {label || "This field"} is required
         </span>
       )}
     </div>

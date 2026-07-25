@@ -6,9 +6,9 @@ import HighlightText from '../components/core/HomePage/HighlightText'
 import CTAButton from "../components/core/HomePage/Button"
 import CodeBlocks from "../components/core/HomePage/CodeBlocks"
 import InstructorSection from '../components/core/HomePage/InstructorSection'
+import FAQSection from '../components/core/HomePage/FAQSection'
 import Footer from '../components/common/Footer'
 import FeaturedCourses from '../components/core/HomePage/FeaturedCourses'
-import GateSubjectsSection from '../components/core/HomePage/GateSubjectsSection'
 import ReviewSlider from '../components/common/ReviewSlider'
 import Course_Slider from '../components/core/Catalog/Course_Slider'
 
@@ -19,6 +19,8 @@ import { FaArrowRight } from "react-icons/fa"
 
 import { motion } from 'framer-motion'
 import { fadeIn, } from './../components/common/motionFrameVarients';
+
+import homeHeroBg from '../assets/Images/home-bg.png'
 
 // background random images
 import backgroundImg1 from '../assets/Images/random bg img/coding bg1.jpg'
@@ -86,27 +88,19 @@ const Home = () => {
 
 
     return (
-        <React.Fragment>
-            {/* background random image */}
-            <div>
-                <div className="w-full h-[450px] md:h-[650px] absolute top-0 left-0 opacity-[0.3] overflow-hidden object-cover ">
-                    <img src={backgroundImg} alt="Background"
-                        className="w-full h-full object-cover "
-                    />
-
-                    <div className="absolute left-0 bottom-0 w-full h-[250px] opacity_layer_bg "></div>
-                </div>
-            </div>
-
+        <div style={{ backgroundColor: '#edfafa', backgroundImage: 'linear-gradient(135deg, rgba(237, 250, 250, 1) 20%, rgba(255, 247, 237, 1) 100%)' }} className="w-full min-h-screen text-richblack-900">
             <div className=' '>
                 {/*Section1  */}
-                <div className='relative min-h-[580px] md:min-h-[680px] justify-center mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white py-16'>
+                <div
+                    className="w-full bg-cover bg-center bg-no-repeat"
+                    style={{ backgroundImage: `url(${homeHeroBg})` }}
+                >
+                    <div className='relative min-h-[580px] md:min-h-[680px] justify-center mx-auto flex flex-col w-11/12 max-w-maxContent items-center py-16 text-richblack-900'>
 
                     <Link to={"/signup"}>
-                        <div className='z-0 group p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200
-                                        transition-all duration-200 hover:scale-95 w-fit mb-2'>
-                            <div className='flex flex-row items-center gap-2 rounded-full px-10 py-[7px] text-sm
-                              transition-all duration-200 group-hover:bg-richblack-900'>
+                        <div className='group mx-auto rounded-full bg-white shadow-[0_3px_15px_rgba(0,0,0,0.08)] text-richblack-900 font-bold
+                                        transition-all duration-200 hover:scale-95 hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)] w-fit mb-2'>
+                            <div className='flex flex-row items-center gap-2 px-8 py-[10px] text-[15px]'>
                                 <p>Become an Instructor</p>
                                 <FaArrowRight />
                             </div>
@@ -140,9 +134,10 @@ const Home = () => {
                         </CTAButton>
                     </div>
                 </div>
+                </div>
 
                 {/* animated code */}
-                <div className='relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between'>
+                <div className='relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-richblack-900 justify-between'>
                     {/* Code block 1 */}
                     <div className='w-full'>
                         <CodeBlocks
@@ -173,7 +168,7 @@ const Home = () => {
                             }
 
                             codeblock={`<!DOCTYPE html>\n<html>\n<head><title>Example</title>\n</head>\n<body>\n<h1><ahref="/">Header</a>\n</h1>\n<nav><ahref="one/">One</a><ahref="two/">Two</a><ahref="three/">Three</a>\n</nav>`}
-                            codeColor={"text-yellow-25"}
+                            codeColor={"text-[#0056D2]"}
                             backgroundGradient={"code-block1-grad"}
                         />
                     </div>
@@ -202,7 +197,7 @@ const Home = () => {
                                 link: "/signup",
                                 active: false,
                             }}
-                            codeColor={"text-white"}
+                            codeColor={"text-richblack-900"}
                             codeblock={`#include <stdio.h>\n\nint main() {\nprintf("Hello, World!\\n");\nreturn 0;\n}`}
                             backgroundGradient={"code-block2-grad"}
                         />
@@ -214,23 +209,18 @@ const Home = () => {
                     <FeaturedCourses />
                 </div>
 
-                {/* GATE Competitive Exam Prep Section */}
-                <GateSubjectsSection />
-
-
-
-
-
-
                 {/*Section 3 */}
-                <div className='mt-14 w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 first-letter bg-richblack-900 text-white'>
+                <div className='mt-14 w-11/12 mx-auto max-w-maxContent flex-col items-center justify-between gap-8 text-richblack-900'>
                     <InstructorSection />
                 </div>
+
+                {/* FAQ Section */}
+                <FAQSection />
 
                 {/*Footer */}
                 <Footer />
             </div >
-        </React.Fragment>
+        </div>
     )
 }
 

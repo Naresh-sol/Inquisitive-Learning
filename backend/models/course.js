@@ -55,6 +55,11 @@ const courseSchema = new mongoose.Schema({
         type: String,
         enum: ['Draft', 'Published']
     },
+    difficulty: {
+        type: String,
+        enum: ['All Levels', 'Beginner', 'Intermediate', 'Advanced'],
+        default: 'All Levels'
+    },
     createdAt: {
         type: Date,
     }

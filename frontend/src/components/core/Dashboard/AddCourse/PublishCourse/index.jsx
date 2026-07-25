@@ -64,37 +64,43 @@ export default function PublishCourse() {
   }
 
   return (
-    <div className="rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
-      <p className="text-2xl font-semibold text-richblack-5">
+    <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.03)] border border-gray-100 p-8 mt-8">
+      <p className="text-2xl font-extrabold text-richblack-900 tracking-tight mb-6 pb-6 border-b border-gray-100">
         Publish Settings
       </p>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Checkbox */}
         <div className="my-6 mb-8">
-          <label htmlFor="public" className="inline-flex items-center text-lg">
+          <label htmlFor="public" className="inline-flex items-center text-lg cursor-pointer">
             <input
               type="checkbox"
               id="public"
               {...register("public")}
-              className="border-gray-300 h-4 w-4 rounded bg-richblack-500 text-richblack-400 focus:ring-2 focus:ring-richblack-5"
+              className="h-5 w-5 rounded-md border-gray-300 text-[#0056D2] focus:ring-2 focus:ring-[#0056D2]"
             />
-            <span className="ml-2 text-richblack-400">
-              Make this course as public
+            <span className="ml-3 font-semibold text-gray-600">
+              Make this course public
             </span>
           </label>
         </div>
 
         {/* Next Prev Button */}
-        <div className="ml-auto flex max-w-max items-center gap-x-4">
+        <div className="flex justify-end gap-x-4 pt-6 mt-8 border-t border-gray-100">
           <button
             disabled={loading}
             type="button"
             onClick={goBack}
-            className="flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900"
+            className="bg-gray-100 text-gray-600 py-3 px-8 rounded-xl font-bold text-sm hover:bg-gray-200 transition-all"
           >
             Back
           </button>
-          <IconBtn disabled={loading} text="Save Changes" />
+          <button
+            type="submit"
+            disabled={loading}
+            className="bg-[#0056D2] text-white py-3 px-8 rounded-xl font-bold shadow-lg shadow-blue-500/30 hover:bg-[#0043A4] transition-all text-sm disabled:opacity-70"
+          >
+            Save Changes
+          </button>
         </div>
       </form>
     </div>

@@ -154,10 +154,10 @@ const VideoDetails = () => {
   if (courseViewSidebar && window.innerWidth <= 640) return;
 
   return (
-    <div className="flex flex-col gap-5 text-white">
+    <div className="flex flex-col gap-5 text-richblack-900">
 
       {/* open - close side bar icons */}
-      <div className="sm:hidden text-white absolute left-7 top-3 cursor-pointer " onClick={() => dispatch(setCourseViewSidebar(!courseViewSidebar))}>
+      <div className="sm:hidden text-richblack-900 absolute left-7 top-3 cursor-pointer " onClick={() => dispatch(setCourseViewSidebar(!courseViewSidebar))}>
         {
           !courseViewSidebar && <HiMenuAlt1 size={33} />
         }
@@ -165,7 +165,7 @@ const VideoDetails = () => {
 
 
       {!videoData ? (
-        <div className="mx-auto w-full max-w-[800px] aspect-video rounded-md overflow-hidden shadow-lg border border-richblack-700 bg-richblack-800">
+        <div className="mx-auto w-full max-w-[800px] aspect-video rounded-md overflow-hidden shadow-lg border border-richblack-200 bg-white">
           <img
             src={previewSource}
             alt="Preview"
@@ -173,13 +173,18 @@ const VideoDetails = () => {
           />
         </div>
       ) : (
-        <div className="mx-auto w-full max-w-[800px] aspect-video rounded-md overflow-hidden shadow-lg border border-richblack-700 bg-richblack-900">
+        <div className="mx-auto w-full max-w-[800px] aspect-video rounded-md overflow-hidden shadow-lg border border-richblack-200 bg-black">
           <Player
             ref={playerRef}
             aspectRatio="16:9"
             playsInline
             autoPlay
-            onEnded={() => setVideoEnded(true)}
+            onEnded={() => {
+              setVideoEnded(true);
+              if (!completedLectures.includes(subSectionId)) {
+                handleLectureCompletion();
+              }
+            }}
             src={videoData?.videoUrl}
           >
             <BigPlayButton position="center" />
@@ -212,7 +217,7 @@ const VideoDetails = () => {
                       setVideoEnded(false)
                     }
                   }}
-                  className="mx-auto mt-2 p-2 rounded-full hover:bg-richblack-800/40 transition-all duration-200"
+                  className="mx-auto mt-2 p-2 rounded-full hover:bg-white/40 transition-all duration-200"
                   title="Rewatch"
                 >
                   <svg
@@ -223,7 +228,7 @@ const VideoDetails = () => {
                     height="60px"
                     width="60px"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="cursor-pointer text-white hover:text-yellow-50 hover:scale-110 duration-200 transition-all"
+                    className="cursor-pointer text-white hover:text-[#0056D2] hover:scale-110 duration-200 transition-all"
                   >
                     <path
                       d="M20 12a8 8 0 1 1-2.4-5.6M20 4v4h-4"
@@ -263,8 +268,22 @@ const VideoDetails = () => {
         </div>
       )}
 
-      <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>
-      <p className="pt-2 pb-6">{videoData?.description}</p>
+      <h1 className="mt-4 text-3xl font-bold">{videoData?.title}</h1>
+      <p className="pt-2 pb-6 text-richblack-600">{videoData?.description}</p>
+      
+      {videoData?.lectureNotesUrl && (
+        <div className="mb-6">
+          <a
+            href={videoData.lectureNotesUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-[#0056D2] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#0043A4] transition-colors shadow-sm"
+          >
+            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 24 24" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"></path></svg>
+            Download Lecture Notes
+          </a>
+        </div>
+      )}
     </div>
   )
 }

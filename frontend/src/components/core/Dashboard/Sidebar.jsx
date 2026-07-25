@@ -13,6 +13,7 @@ import { HiMenuAlt1 } from 'react-icons/hi'
 import { IoMdClose } from 'react-icons/io'
 
 import { setOpenSideMenu, setScreenSize } from "../../../slices/sidebarSlice";
+import logo from "../../../assets/Logo/Logo-Full-Dark.png";
 
 
 
@@ -55,7 +56,7 @@ export default function Sidebar() {
 
   if (profileLoading || authLoading) {
     return (
-      <div className="grid h-[calc(100vh-3.5rem)] min-w-[220px] items-center border-r-[1px] border-r-richblack-700 bg-richblack-800">
+      <div className="grid h-[calc(100vh-3.5rem)] min-w-[250px] items-center border-r-[1px] border-r-gray-200 bg-[#f4f5f8]">
         <Loading />
       </div>
     )
@@ -63,7 +64,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <div className="sm:hidden text-white absolute left-7 top-3 cursor-pointer " onClick={() => dispatch(setOpenSideMenu(!openSideMenu))}>
+      <div className="sm:hidden text-richblack-900 absolute left-7 top-3 cursor-pointer " onClick={() => dispatch(setOpenSideMenu(!openSideMenu))}>
         {
           openSideMenu ? <IoMdClose size={33} /> : <HiMenuAlt1 size={33} />
         }
@@ -72,8 +73,9 @@ export default function Sidebar() {
 
       {
         openSideMenu &&
-        <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10 ">
-          <div className="flex flex-col mt-6">
+        <div className="flex h-[calc(100vh-3.5rem)] min-w-[250px] flex-col border-r-[1px] border-r-gray-200 bg-[#f4f5f8] py-8 ">
+          
+          <div className="flex flex-col">
             {sidebarLinks.map((link) => {
               if (link.type && user?.accountType !== link.type) return null
               return (
@@ -82,13 +84,13 @@ export default function Sidebar() {
             })}
           </div>
 
-          <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-700" />
+          <div className="mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-gray-200" />
 
           <div className="flex flex-col">
             <SidebarLink
               link={{ name: "Settings", path: "/dashboard/settings" }}
               iconName={"VscSettingsGear"}
-              setOpenSideMen={setOpenSideMenu}
+              setOpenSideMenu={setOpenSideMenu}
             />
 
             <button
@@ -102,9 +104,9 @@ export default function Sidebar() {
                   btn2Handler: () => setConfirmationModal(null),
                 })
               }
-              className=" "
+              className="relative px-4 py-[10px] mx-4 mb-2 rounded-xl text-sm font-bold text-red-500 hover:bg-red-50 hover:text-red-600 transition-all text-left"
             >
-              <div className="flex items-center gap-x-2 px-8 py-2 text-sm font-medium text-richblack-300 hover:bg-richblack-700 relative">
+              <div className="flex items-center gap-x-3 ml-2">
                 <VscSignOut className="text-lg" />
                 <span>Logout</span>
               </div>

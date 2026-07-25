@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
 import Img from './../../common/Img';
+import CourseReviewModal from "../ViewCourse/CourseReviewModal";
 
 
 
@@ -13,6 +14,7 @@ export default function EnrolledCourses() {
   const navigate = useNavigate()
 
   const [enrolledCourses, setEnrolledCourses] = useState(null)
+  const [reviewModal, setReviewModal] = useState(null)
 
   // fetch all users enrolled courses
   const getEnrolledCourses = async () => {
@@ -31,7 +33,7 @@ export default function EnrolledCourses() {
   // Loading Skeleton
   const sklItem = () => {
     return (
-      <div className="flex border border-richblack-700 px-5 py-3 w-full">
+      <div className="flex border border-richblack-200 bg-white shadow-sm px-5 py-3 w-full">
         <div className="flex flex-1 gap-x-4 ">
           <div className='h-14 w-14 rounded-lg skeleton '></div>
 
@@ -52,7 +54,7 @@ export default function EnrolledCourses() {
   // return if data is null
   if (enrolledCourses?.length == 0) {
     return (
-      <p className="grid h-[50vh] w-full place-content-center text-center text-richblack-5 text-3xl">
+      <p className="grid h-[50vh] w-full place-content-center text-center text-richblack-900 text-3xl font-semibold">
         You have not enrolled in any course yet.
       </p>)
   }
@@ -61,11 +63,11 @@ export default function EnrolledCourses() {
 
   return (
     <>
-      <div className="text-4xl text-richblack-5 font-boogaloo text-center sm:text-left">Enrolled Courses</div>
+      <div className="text-4xl font-bold text-richblack-900 text-center sm:text-left">Enrolled Courses</div>
       {
-        <div className="my-8 text-richblack-5">
+        <div className="my-8 text-richblack-900">
           {/* Headings */}
-          <div className="flex rounded-t-2xl bg-richblack-800 ">
+          <div className="flex rounded-t-2xl bg-[#0056D2] text-white">
             <p className="w-[45%] px-5 py-3">Course Name</p>
             <p className="w-1/4 px-2 py-3">Duration</p>
             <p className="flex-1 px-2 py-3">Progress</p>
@@ -85,7 +87,7 @@ export default function EnrolledCourses() {
           {
             enrolledCourses?.map((course, i, arr) => (
               <div
-                className={`flex flex-col sm:flex-row sm:items-center border border-richblack-700 ${i === arr.length - 1 ? "rounded-b-2xl" : "rounded-none"}`}
+                className={`flex flex-col sm:flex-row sm:items-center border border-richblack-200 bg-white shadow-sm hover:shadow-md transition-shadow ${i === arr.length - 1 ? "rounded-b-2xl" : "rounded-none"}`}
                 key={i}
               >
                 <div
@@ -103,8 +105,8 @@ export default function EnrolledCourses() {
                   />
 
                   <div className="flex max-w-xs flex-col gap-2">
-                    <p className="font-semibold">{course.courseName}</p>
-                    <p className="text-xs text-richblack-300">
+                    <p className="font-bold text-richblack-900">{course.courseName}</p>
+                    <p className="text-xs text-richblack-600">
                       {course.courseDescription.length > 50
                         ? `${course.courseDescription.slice(0, 50)}...`
                         : course.courseDescription}
@@ -126,25 +128,48 @@ export default function EnrolledCourses() {
                       height="8px"
                       isLabelVisible={false}
                     />
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setReviewModal({ courseId: course?._id });
+                      }}
+                      className="bg-[#0056D2] text-white px-4 py-2 mt-2 rounded-md font-semibold text-sm hover:bg-[#004bb5] w-fit"
+                    >
+                      Add Review
+                    </button>
                   </div>
                 </div>
 
                 {/* only for larger devices */}
                 {/* duration -  progress */}
                 <div className="hidden w-1/5 sm:flex px-2 py-3">{course?.totalDuration}</div>
-                <div className="hidden sm:flex w-1/5 flex-col gap-2 px-2 py-3">
-                  <p>Progress: {course.progressPercentage || 0}%</p>
-                  <ProgressBar
-                    completed={course.progressPercentage || 0}
-                    height="8px"
-                    isLabelVisible={false}
-                  />
+                <div className="hidden sm:flex flex-1 flex-col gap-2 px-2 py-3">
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex-1 mr-4">
+                      <p className="mb-2">Progress: {course.progressPercentage || 0}%</p>
+                      <ProgressBar
+                        completed={course.progressPercentage || 0}
+                        height="8px"
+                        isLabelVisible={false}
+                      />
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setReviewModal({ courseId: course?._id });
+                      }}
+                      className="bg-[#0056D2] text-white px-4 py-2 rounded-md font-semibold text-sm hover:bg-[#004bb5] whitespace-nowrap"
+                    >
+                      Add Review
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
           }
         </div>
       }
+      {reviewModal && <CourseReviewModal reviewModal={reviewModal} setReviewModal={setReviewModal} />}
     </>
   )
 }

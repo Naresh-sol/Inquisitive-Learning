@@ -26,7 +26,7 @@ const highlights = [
 
 const GateSubjectsSection = () => {
     return (
-        <div className="w-full bg-richblack-900 py-20">
+        <div className="w-full bg-transparent py-20">
 
             {/* ── Section Header ── */}
             <motion.div
@@ -36,13 +36,13 @@ const GateSubjectsSection = () => {
                 viewport={{ once: false, amount: 0.1 }}
                 className="text-center mb-14 px-4"
             >
-                <p className="text-sm font-bold uppercase tracking-[4px] text-yellow-25 mb-3">
+                <p className="text-sm font-bold uppercase tracking-[4px] text-blue-500 mb-3">
                     🎯 Competitive Exam Preparation
                 </p>
-                <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
+                <h2 className="text-4xl lg:text-5xl font-bold text-richblack-900 leading-tight">
                     Crack <HighlightText text={"GATE, UGC-NET"} /> &amp; ISRO
                 </h2>
-                <p className="mt-4 text-richblack-300 text-lg max-w-2xl mx-auto">
+                <p className="mt-4 text-richblack-600 text-lg max-w-2xl mx-auto">
                     Structured courses on every core CS subject — built specifically for aspirants who want to score big.
                 </p>
             </motion.div>
@@ -84,16 +84,16 @@ const GateSubjectsSection = () => {
                     viewport={{ once: false, amount: 0.1 }}
                     className="w-full lg:w-[55%]"
                 >
-                    <div className="relative rounded-2xl border border-richblack-600 bg-richblack-800 p-8 overflow-hidden min-h-[240px] flex flex-col justify-between">
+                    <div className="relative rounded-2xl border border-gray-200 bg-white shadow-lg p-8 overflow-hidden min-h-[240px] flex flex-col justify-between">
                         {/* Glow blobs */}
-                        <div className="absolute -top-12 -left-12 w-56 h-56 bg-yellow-400 rounded-full opacity-10 blur-3xl pointer-events-none" />
+                        <div className="absolute -top-12 -left-12 w-56 h-56 bg-[#0056D2] rounded-full opacity-10 blur-3xl pointer-events-none" />
                         <div className="absolute -bottom-12 -right-12 w-56 h-56 bg-blue-500 rounded-full opacity-10 blur-3xl pointer-events-none" />
 
                         <div>
-                            <p className="text-sm font-bold text-richblack-400 uppercase tracking-widest mb-5">
+                            <p className="text-sm font-bold text-richblack-600 uppercase tracking-widest mb-5">
                                 📚 Currently Studying
                             </p>
-                            <div className="text-2xl lg:text-3xl font-bold text-yellow-25 font-mono min-h-[3.5rem]">
+                            <div className="text-2xl lg:text-3xl font-bold text-[#0056D2] font-mono min-h-[3.5rem]">
                                 <TypeAnimation
                                     sequence={[
                                         "DBMS — Transactions & Normalization",
@@ -120,19 +120,19 @@ const GateSubjectsSection = () => {
 
                         {/* Progress bar decoration */}
                         <div className="mt-8">
-                            <div className="flex justify-between text-xs text-richblack-400 mb-2">
+                            <div className="flex justify-between text-xs text-richblack-600 mb-2">
                                 <span>Your GATE Prep Journey</span>
                                 <span>Keep Going! 🚀</span>
                             </div>
-                            <div className="w-full h-2 bg-richblack-700 rounded-full overflow-hidden">
+                            <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                                 <motion.div
-                                    className="h-full bg-gradient-to-r from-yellow-400 to-yellow-200 rounded-full"
+                                    className="h-full bg-gradient-to-r from-[#0056D2] to-blue-400 rounded-full"
                                     initial={{ width: "0%" }}
                                     whileInView={{ width: "65%" }}
                                     transition={{ duration: 1.5, ease: "easeOut" }}
                                 />
                             </div>
-                            <p className="text-xs text-richblack-400 mt-1">65% of syllabus recommended completed</p>
+                            <p className="text-xs text-richblack-600 mt-1">65% of syllabus recommended completed</p>
                         </div>
                     </div>
                 </motion.div>
@@ -143,7 +143,7 @@ const GateSubjectsSection = () => {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: false, amount: 0.1 }}
-                    className="w-full lg:w-[45%] flex flex-col gap-7 text-white"
+                    className="w-full lg:w-[45%] flex flex-col gap-7 text-richblack-900"
                 >
                     <h3 className="text-3xl lg:text-4xl font-bold leading-snug">
                         Everything you need to
@@ -154,7 +154,7 @@ const GateSubjectsSection = () => {
                         {highlights.map((item, i) => (
                             <li key={i} className="flex items-start gap-4">
                                 <span className="text-2xl mt-0.5">{item.icon}</span>
-                                <span className="text-richblack-100 text-base font-medium leading-snug">
+                                <span className="text-richblack-900 text-base font-medium leading-snug">
                                     {item.text}
                                 </span>
                             </li>

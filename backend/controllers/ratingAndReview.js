@@ -40,9 +40,14 @@ exports.createRating = async (req, res) => {
         );
 
         if (alreadyReviewd) {
-            return res.status(403).json({
-                success: false,
-                message: 'Course is already reviewed by the user'
+            alreadyReviewd.rating = rating;
+            alreadyReviewd.review = review;
+            await alreadyReviewd.save();
+
+            return res.status(200).json({
+                success: true,
+                data: alreadyReviewd,
+                message: "Course review updated successfully"
             });
         }
 

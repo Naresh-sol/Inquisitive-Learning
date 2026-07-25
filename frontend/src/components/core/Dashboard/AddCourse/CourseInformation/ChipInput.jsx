@@ -54,22 +54,24 @@ export default function ChipInput({ label, name, placeholder, register, errors, 
   return (
     <div className="flex flex-col space-y-2">
 
-      <label className="text-sm text-richblack-5" htmlFor={name}>
-        {label} <sup className="text-pink-200">*</sup>
-      </label>
+      {label && (
+        <label className="text-sm text-richblack-900 font-medium" htmlFor={name}>
+          {label} <sup className="text-red-500">*</sup>
+        </label>
+      )}
 
       <div className="flex w-full flex-wrap gap-y-2">
         {chips?.map((chip, index) => (
           <div
             key={index}
-            className="m-1 flex items-center rounded-full bg-yellow-400 px-2 py-1 text-sm text-richblack-5"
+            className="m-1 flex items-center rounded-full bg-[#0056D2]/10 px-3 py-1 text-xs font-bold text-[#0056D2]"
           >
             {chip}
 
             {/* delete chip */}
             <button
               type="button"
-              className="ml-2 focus:outline-none"
+              className="ml-2 focus:outline-none hover:text-red-500 transition-colors"
               onClick={() => handleDeleteChip(index)}
             >
               <MdClose className="text-sm" />
@@ -84,12 +86,12 @@ export default function ChipInput({ label, name, placeholder, register, errors, 
           type="text"
           placeholder={placeholder}
           onKeyDown={handleKeyDown}
-          className="form-style w-full"
+          className="w-full rounded-xl bg-gray-50/50 border border-gray-200 px-4 py-3 text-richblack-900 outline-none focus:bg-white focus:border-[#0056D2] focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm placeholder:text-gray-400"
         />
       </div>
       {errors[name] && (
-        <span className="ml-2 text-xs tracking-wide text-pink-200">
-          {label} is required
+        <span className="ml-1 text-xs font-semibold text-red-500">
+          {label || "This field"} is required
         </span>
       )}
     </div>

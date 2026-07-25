@@ -14,7 +14,7 @@ const { convertSecondsToDuration } = require("../utils/secToDuration")
 exports.createCourse = async (req, res) => {
     try {
         // extract data
-        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions: _instructions, status, tag: _tag } = req.body;
+        let { courseName, courseDescription, whatYouWillLearn, price, category, instructions: _instructions, status, tag: _tag, difficulty } = req.body;
 
         // Convert the tag and instructions from stringified Array to Array
         const tag = JSON.parse(_tag)
@@ -66,7 +66,7 @@ exports.createCourse = async (req, res) => {
         // create new course - entry in DB
         const newCourse = await Course.create({
             courseName, courseDescription, instructor: instructorId, whatYouWillLearn, price, category: categoryDetails._id,
-            tag, status, instructions, thumbnail: thumbnailDetails.secure_url, createdAt: Date.now(),
+            tag, status, instructions, difficulty: difficulty || "All Levels", thumbnail: thumbnailDetails.secure_url, createdAt: Date.now(),
         });
 
         // add course id to instructor courses list, this is bcoz - it will show all created courses by instructor 
@@ -117,7 +117,7 @@ exports.getAllCourses = async (req, res) => {
         const allCourses = await Course.find({},
             {
                 courseName: true, courseDescription: true, price: true, thumbnail: true, instructor: true,
-                ratingAndReviews: true, studentsEnrolled: true
+                ratingAndReviews: true, studentsEnrolled: true, difficulty: true
             })
             .populate({
                 path: 'instructor',
@@ -162,7 +162,13 @@ exports.getCourseDetails = async (req, res) => {
                 },
             })
             .populate("category")
-            .populate("ratingAndReviews")
+            .populate({
+                path: "ratingAndReviews",
+                populate: {
+                    path: "user",
+                    select: "firstName lastName image"
+                }
+            })
 
             .populate({
                 path: "courseContent",
@@ -193,7 +199,7 @@ exports.getCourseDetails = async (req, res) => {
         let totalDurationInSeconds = 0
         courseDetails.courseContent.forEach((content) => {
             content.subSection.forEach((subSection) => {
-                const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                const timeDurationInSeconds = parseInt(subSection.timeDuration) || 0
                 totalDurationInSeconds += timeDurationInSeconds
             })
         })
@@ -240,7 +246,13 @@ exports.getFullCourseDetails = async (req, res) => {
                 },
             })
             .populate("category")
-            .populate("ratingAndReviews")
+            .populate({
+                path: "ratingAndReviews",
+                populate: {
+                    path: "user",
+                    select: "firstName lastName image"
+                }
+            })
             .populate({
                 path: "courseContent",
                 populate: {
@@ -274,7 +286,7 @@ exports.getFullCourseDetails = async (req, res) => {
         let totalDurationInSeconds = 0
         courseDetails.courseContent.forEach((content) => {
             content.subSection.forEach((subSection) => {
-                const timeDurationInSeconds = parseInt(subSection.timeDuration)
+                const timeDurationInSeconds = parseInt(subSection.timeDuration) || 0
                 totalDurationInSeconds += timeDurationInSeconds
             })
         })
@@ -383,13 +395,32 @@ exports.getInstructorCourses = async (req, res) => {
 
         // Find all courses belonging to the instructor
         const instructorCourses = await Course.find({ instructor: instructorId, }).sort({ createdAt: -1 })
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection",
+                },
+            }).exec()
 
+        const coursesWithDuration = instructorCourses.map((course) => {
+            let totalDurationInSeconds = 0
+            course.courseContent.forEach((content) => {
+                content.subSection.forEach((subSec) => {
+                    const timeDurationInSeconds = parseInt(subSec.timeDuration) || 0
+                    totalDurationInSeconds += timeDurationInSeconds
+                })
+            })
+            const totalDuration = convertSecondsToDuration(totalDurationInSeconds)
+            return {
+                ...course.toObject(),
+                totalDuration,
+            }
+        })
 
         // Return the instructor's courses
         res.status(200).json({
             success: true,
-            data: instructorCourses,
-            // totalDurationInSeconds:totalDurationInSeconds,
+            data: coursesWithDuration,
             message: 'Courses made by Instructor fetched successfully'
         })
     } catch (error) {

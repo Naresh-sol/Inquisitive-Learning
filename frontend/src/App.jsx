@@ -77,7 +77,10 @@ function App() {
 
 
   return (
-    <div className="w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
+    <div 
+      className="w-screen min-h-screen flex flex-col font-inter text-richblack-900"
+      style={{ backgroundColor: '#edfafa', backgroundImage: 'linear-gradient(135deg, rgba(237, 250, 250, 1) 20%, rgba(255, 247, 237, 1) 100%)' }}
+    >
       <Navbar />
 
       {/* go upward arrow */}
@@ -90,6 +93,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        <Route path="catalog" element={<Catalog />} />
         <Route path="catalog/:catalogName" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
 

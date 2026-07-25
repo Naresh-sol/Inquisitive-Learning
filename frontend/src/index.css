@@ -75,11 +75,11 @@ body {
 
 
 .lable-style {
-  @apply text-[14px] text-richblack-5;
+  @apply text-[14px] text-richblack-900 font-medium;
 }
 
 .form-style {
-  @apply rounded-lg bg-richblack-700 p-3 text-[16px] leading-[24px] text-richblack-5 shadow-[0_1px_0_0] shadow-white/30 placeholder:text-richblack-400 focus:outline-none;
+  @apply rounded-lg bg-white border border-gray-300 p-3 text-[16px] leading-[24px] text-richblack-900 shadow-sm placeholder:text-richblack-400 focus:outline-blue-200;
 }
 
 .section_heading {
@@ -133,14 +133,14 @@ body {
 
 /* used in Navbar */
 .top {
-  /* background: rgba(0, 0, 0, 0.25); */
-  background: #222831a1;
-  backdrop-filter: blur(3.5px);
-  -webkit-backdrop-filter: blur(3.5px);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .show {
-  background-color: #020c1b;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .hide {

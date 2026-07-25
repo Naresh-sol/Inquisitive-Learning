@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "react-hot-toast"
 import { RxCross2 } from "react-icons/rx"
+import { FiLink } from "react-icons/fi"
 import { useDispatch, useSelector } from "react-redux"
 
 import {
@@ -38,6 +39,7 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
       setValue("lectureTitle", modalData.title)
       setValue("lectureDesc", modalData.description)
       setValue("lectureVideo", modalData.videoUrl)
+      setValue("lectureNotesUrl", modalData.lectureNotesUrl || "")
     }
   }, [])
 
@@ -48,7 +50,8 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
     if (
       currentValues.lectureTitle !== modalData.title ||
       currentValues.lectureDesc !== modalData.description ||
-      currentValues.lectureVideo !== modalData.videoUrl
+      currentValues.lectureVideo !== modalData.videoUrl ||
+      currentValues.lectureNotesUrl !== (modalData.lectureNotesUrl || "")
     ) {
       return true
     }
@@ -71,6 +74,9 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
     }
     if (currentValues.lectureVideo !== modalData.videoUrl) {
       formData.append("video", currentValues.lectureVideo)
+    }
+    if (currentValues.lectureNotesUrl !== (modalData.lectureNotesUrl || "")) {
+      formData.append("lectureNotesUrl", currentValues.lectureNotesUrl || "")
     }
     setLoading(true)
     const result = await updateSubSection(formData, token)
@@ -105,6 +111,7 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
     formData.append("title", data.lectureTitle)
     formData.append("description", data.lectureDesc)
     formData.append("video", data.lectureVideo)
+    formData.append("lectureNotesUrl", data.lectureNotesUrl || "")
     setLoading(true)
     const result = await createSubSection(formData, token)
     if (result) {
@@ -120,21 +127,21 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
   }
 
   return (
-    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
-      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
+    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-black bg-opacity-40 backdrop-blur-sm p-4">
+      <div className="my-10 w-full max-w-[700px] rounded-3xl border border-gray-200 bg-gray-100 shadow-2xl overflow-hidden">
         {/* Modal Header */}
-        <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
-          <p className="text-xl font-semibold text-richblack-5">
+        <div className="flex items-center justify-between bg-white p-6 border-b border-gray-100">
+          <p className="text-xl font-extrabold text-richblack-900">
             {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
           </p>
           <button onClick={() => (!loading ? setModalData(null) : {})}>
-            <RxCross2 className="text-2xl text-richblack-5" />
+            <RxCross2 className="text-2xl text-gray-500 hover:text-gray-900 transition-colors" />
           </button>
         </div>
         {/* Modal Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="space-y-8 px-8 py-10"
+          className="space-y-6 px-8 py-8"
         >
           {/* Lecture Video Upload */}
           <Upload
@@ -149,18 +156,18 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
           />
           {/* Lecture Title */}
           <div className="flex flex-col space-y-2">
-            <label className="text-sm text-richblack-5" htmlFor="lectureTitle">
-              Lecture Title {!view && <sup className="text-pink-200">*</sup>}
+            <label className="text-xs font-bold text-gray-600 uppercase tracking-wider" htmlFor="lectureTitle">
+              Lecture Title {!view && <sup className="text-red-500">*</sup>}
             </label>
             <input
               disabled={view || loading}
               id="lectureTitle"
               placeholder="Enter Lecture Title"
               {...register("lectureTitle", { required: true })}
-              className="form-style w-full"
+              className="w-full rounded-xl bg-white border border-gray-200 px-4 py-3 text-richblack-900 outline-none focus:border-[#0056D2] focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm"
             />
             {errors.lectureTitle && (
-              <span className="ml-2 text-xs tracking-wide text-pink-200">
+              <span className="ml-1 text-xs font-semibold text-red-500">
                 Lecture title is required
               </span>
             )}
@@ -168,29 +175,58 @@ export default function SubSectionModal({ modalData, setModalData, add = false, 
           
           {/* Lecture Description */}
           <div className="flex flex-col space-y-2">
-            <label className="text-sm text-richblack-5" htmlFor="lectureDesc">
-              Lecture Description{" "}
-              {!view && <sup className="text-pink-200">*</sup>}
+            <label className="text-xs font-bold text-gray-600 uppercase tracking-wider" htmlFor="lectureDesc">
+              Lecture Description {!view && <sup className="text-red-500">*</sup>}
             </label>
             <textarea
               disabled={view || loading}
               id="lectureDesc"
               placeholder="Enter Lecture Description"
               {...register("lectureDesc", { required: true })}
-              className="form-style resize-x-none min-h-[130px] w-full"
+              className="w-full rounded-xl bg-white border border-gray-200 px-4 py-3 text-richblack-900 outline-none focus:border-[#0056D2] focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm resize-y min-h-[130px]"
             />
             {errors.lectureDesc && (
-              <span className="ml-2 text-xs tracking-wide text-pink-200">
+              <span className="ml-1 text-xs font-semibold text-red-500">
                 Lecture Description is required
               </span>
             )}
           </div>
-          {!view && (
-            <div className="flex justify-end">
-              <IconBtn
-                disabled={loading}
-                text={loading ? "Loading.." : edit ? "Save Changes" : "Save"}
+          
+          {/* Lecture Notes URL */}
+          <div className="flex flex-col space-y-2">
+            <label className="text-xs font-bold text-gray-600 uppercase tracking-wider" htmlFor="lectureNotesUrl">
+              Lecture Notes URL (Optional)
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                 <FiLink className="text-gray-400" />
+              </div>
+              <input
+                disabled={view || loading}
+                id="lectureNotesUrl"
+                placeholder="Enter Lecture Notes URL (e.g. Google Drive link)"
+                {...register("lectureNotesUrl")}
+                className="w-full rounded-xl bg-white border border-gray-200 pl-10 pr-4 py-3 text-richblack-900 outline-none focus:border-[#0056D2] focus:ring-4 focus:ring-blue-500/10 transition-all font-medium text-sm"
               />
+            </div>
+          </div>
+          
+          {!view && (
+            <div className="flex justify-end items-center gap-x-6 pt-6 mt-8">
+              <button
+                type="button"
+                onClick={() => (!loading ? setModalData(null) : {})}
+                className="text-xs font-extrabold text-gray-500 hover:text-gray-900 tracking-widest transition-colors"
+              >
+                CANCEL
+              </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="bg-[#0056D2] text-white px-8 py-3 rounded-xl font-bold hover:bg-[#0043A4] transition-all tracking-wider text-sm shadow-lg shadow-blue-500/20"
+              >
+                {loading ? "SAVING.." : edit ? "SAVE CHANGES" : "SAVE LECTURE"}
+              </button>
             </div>
           )}
         </form>

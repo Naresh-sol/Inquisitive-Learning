@@ -33,21 +33,21 @@ const ExploreMore = () => {
         <div className="text-4xl lg:text-5xl font-bold text-center my-12">
           Unlock the
           <HighlightText text={" Power of Code"} />
-          <p className="text-center text-richblack-300 text-lg lg:text-xl font-medium mt-3">
+          <p className="text-center text-richblack-600 text-lg lg:text-xl font-medium mt-3">
             Learn to Build Anything You Can Imagine
           </p>
         </div>
       </div>
 
       {/* Tabs Section */}
-      <div className="hidden lg:flex gap-5 -mt-5 mx-auto w-max bg-richblack-800 text-richblack-200 p-1 rounded-full font-medium drop-shadow-[0_1.5px_rgba(255,255,255,0.25)]">
+      <div className="hidden lg:flex gap-5 -mt-5 mx-auto w-max bg-gray-200 text-richblack-600 p-1 rounded-full font-medium shadow-sm border border-gray-300">
         {tabsName.map((ele, index) => {
           return (
             <div
               className={` text-base flex flex-row items-center gap-2 ${currentTab === ele
-                ? "bg-richblack-900 text-richblack-5 font-semibold"
-                : "text-richblack-200"
-                } px-8 py-2 rounded-full transition-all duration-200 cursor-pointer hover:bg-richblack-900 hover:text-richblack-5`}
+                ? "bg-white text-[#0056D2] shadow-sm font-semibold"
+                : "text-richblack-600"
+                } px-8 py-2 rounded-full transition-all duration-200 cursor-pointer hover:bg-white hover:text-[#0056D2]`}
               key={index}
               onClick={() => setMyCards(ele)}
             >

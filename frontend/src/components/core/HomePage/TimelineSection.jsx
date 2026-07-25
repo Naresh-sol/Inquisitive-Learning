@@ -53,7 +53,7 @@ const TimelineSection = () => {
                             return (
                                 <div className='flex flex-row gap-6' key={index}>
 
-                                    <div className='w-[50px] h-[50px] rounded-full bg-richblue-500 flex justify-center items-center'>
+                                    <div className='w-[50px] h-[50px] rounded-full bg-[#0056D2] flex justify-center items-center shadow-md'>
                                         <img src={element.Logo} />
                                     </div>
 
@@ -77,19 +77,19 @@ const TimelineSection = () => {
 
                     <Img src={timelineImage}
                         alt="timelineImage"
-                        className='shadow-white object-cover h-fit scale-x-[-1] w-[550px] '
+                        className='shadow-xl object-cover h-fit scale-x-[-1] w-[550px] rounded-lg'
                     />
 
-                    <div className=' absolute bg-caribbeangreen-700 flex flex-row text-white uppercase py-7
-                            left-[50%] translate-x-[-50%] translate-y-[-70%] rounded-3xl'>
-                        <div className='flex flex-row gap-5 items-center border-r border-caribbeangreen-300 px-7'>
+                    <div className=' absolute bg-[#0056D2] flex flex-row text-white uppercase py-7
+                            left-[50%] translate-x-[-50%] translate-y-[-70%] rounded-3xl shadow-lg'>
+                        <div className='flex flex-row gap-5 items-center border-r border-blue-300 px-7'>
                             <p className='text-2xl lg:text-3xl font-bold'>10</p>
-                            <p className='text-caribbeangreen-300 text-xs lg:text-sm'>Years of Experience</p>
+                            <p className='text-blue-200 text-xs lg:text-sm'>Years of Experience</p>
                         </div>
 
                         <div className='flex gap-5 items-center px-7'>
                             <p className='text-2xl lg:text-3xl font-bold'>250</p>
-                            <p className='text-caribbeangreen-300 text-xs lg:text-sm'>TYpe of Courses</p>
+                            <p className='text-blue-200 text-xs lg:text-sm'>TYpe of Courses</p>
                         </div>
 
                     </div>
