@@ -3,6 +3,7 @@ const instance = require('../config/rajorpay');
 const crypto = require('crypto');
 const mailSender = require('../utils/mailSender');
 const { courseEnrollmentEmail } = require('../mail/templates/courseEnrollmentEmail');
+const { paymentSuccessEmail } = require('../mail/templates/paymentSuccessEmail');
 require('dotenv').config();
 
 const User = require('../models/user');
@@ -200,6 +201,7 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
             paymentSuccessEmail(`${enrolledStudent.firstName}`,
                 amount / 100, orderId, paymentId)
         )
+        return res.status(200).json({ success: true, message: "Email sent successfully" })
     }
     catch (error) {
         console.log("error in sending mail", error)

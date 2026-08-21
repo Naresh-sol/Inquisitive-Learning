@@ -213,21 +213,34 @@ exports.getEnrolledCourses = async (req, res) => {
                 },
             })
             .exec()
+        if (!userDetails) {
+            return res.status(400).json({
+                success: false,
+                message: `Could not find user with id: ${userId}`,
+            })
+        }
 
         userDetails = userDetails.toObject()
+
+        // Filter out null courses (in case a course was deleted but the user is still enrolled)
+        userDetails.courses = userDetails.courses.filter((course) => course !== null)
 
         var SubsectionLength = 0
         for (var i = 0; i < userDetails.courses.length; i++) {
             let totalDurationInSeconds = 0
             SubsectionLength = 0
+            userDetails.courses[i].courseContent = userDetails.courses[i].courseContent.filter((content) => content !== null)
+
             for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
+                userDetails.courses[i].courseContent[j].subSection = userDetails.courses[i].courseContent[j].subSection.filter((sub) => sub !== null)
+                
                 totalDurationInSeconds += userDetails.courses[i].courseContent[
                     j
                 ].subSection.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0)
 
-                userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds)
                 SubsectionLength += userDetails.courses[i].courseContent[j].subSection.length
             }
+            userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds)
 
             let courseProgressCount = await CourseProgress.findOne({
                 courseID: userDetails.courses[i]._id,
@@ -246,12 +259,7 @@ exports.getEnrolledCourses = async (req, res) => {
             }
         }
 
-        if (!userDetails) {
-            return res.status(400).json({
-                success: false,
-                message: `Could not find user with id: ${userDetails}`,
-            })
-        }
+
 
         return res.status(200).json({
             success: true,

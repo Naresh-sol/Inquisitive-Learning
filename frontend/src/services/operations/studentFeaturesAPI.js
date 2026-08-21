@@ -1,7 +1,7 @@
 import { toast } from "react-hot-toast";
 import { studentEndpoints } from "../apis";
 import { apiConnector } from "../apiConnector";
-import rzpLogo from "../../assets/Logo/rzp_logo.png"
+import appLogo from "../../assets/Logo/Logo-Full-Light.png"
 import { setPaymentLoading } from "../../slices/courseSlice";
 import { resetCart } from "../../slices/cartSlice";
 
@@ -65,12 +65,13 @@ export async function buyCourse(token, coursesId, userDetails, navigate, dispatc
             currency: orderResponse.data.message.currency,
             amount: orderResponse.data.message.amount,
             order_id: orderResponse.data.message.id,
-            name: "StudyNotion",
+            name: "Inquisitive learning",
             description: "Thank You for Purchasing the Course",
-            image: rzpLogo,
+            image: appLogo.startsWith("http") ? appLogo : window.location.origin + (appLogo.startsWith("/") ? "" : "/") + appLogo,
             prefill: {
                 name: userDetails.firstName,
-                email: userDetails.email
+                email: userDetails.email,
+                contact: userDetails?.additionalDetails?.contactNumber || "9999999999"
             },
             handler: function (response) {
                 //send successful mail
