@@ -10,7 +10,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import About from "./pages/About";
-import Contact from "./pages/Contact";
 import PageNotFound from "./pages/PageNotFound";
 import CourseDetails from './pages/CourseDetails';
 import Catalog from './pages/Catalog';
@@ -34,6 +33,7 @@ import AddCourse from "./components/core/Dashboard/AddCourse/AddCourse";
 
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from './components/core/ViewCourse/VideoDetails';
+import TakeAssignment from './components/core/ViewCourse/TakeAssignment';
 
 import { ACCOUNT_TYPE } from './utils/constants';
 
@@ -91,7 +91,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
         <Route path="catalog" element={<Catalog />} />
         <Route path="catalog/:catalogName" element={<Catalog />} />
@@ -183,10 +182,16 @@ function App() {
           }
         >
           {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-            <Route
-              path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
-              element={<VideoDetails />}
-            />
+            <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              />
+              <Route
+                path="view-course/:courseId/assignment/:assignmentId"
+                element={<TakeAssignment />}
+              />
+            </>
           )}
         </Route>
 

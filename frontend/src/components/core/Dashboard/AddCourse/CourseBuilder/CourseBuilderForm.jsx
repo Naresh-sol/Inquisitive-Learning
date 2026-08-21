@@ -157,7 +157,7 @@ export default function CourseBuilderForm() {
            onClick={goToNext}
            className="bg-[#0056D2] text-white py-3 px-8 rounded-xl font-bold flex items-center gap-2 shadow-lg shadow-blue-500/30 hover:bg-[#0043A4] transition-all disabled:opacity-70 group"
         >
-           <span>Next: Publish Course</span>
+           <span>Next: Assignments</span>
            <MdNavigateNext className="text-2xl group-hover:translate-x-1 transition-transform" />
         </button>
       </div>

@@ -107,7 +107,7 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-[12px] font-medium">
-                    Lession {section?.subSection.length}
+                    Lesson {section?.subSection.length}
                   </span>
                   <span
                     className={`${activeStatus.includes(section?._id)
@@ -148,6 +148,61 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
               )}
             </div>
           ))}
+
+          {/* render assignments if any */}
+          {courseEntireData?.assignments?.length > 0 && (
+            <div className="mt-4 text-sm text-richblack-900 border-t border-richblack-200 pt-4">
+              <div 
+                className="flex justify-between bg-gray-200 px-5 py-4 cursor-pointer"
+                onClick={() => {
+                  if (activeStatus.includes("assignments_section")) {
+                    setActiveStatus(activeStatus.filter((s) => s !== "assignments_section"))
+                  } else {
+                    setActiveStatus([...activeStatus, "assignments_section"])
+                  }
+                }}
+              >
+                <div className="w-[70%] font-semibold">
+                  Assignments
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[12px] font-medium">
+                    {courseEntireData.assignments.length} Tasks
+                  </span>
+                  <span
+                    className={`${activeStatus.includes("assignments_section")
+                      ? "rotate-0 transition-all duration-500"
+                      : "rotate-180 transition-all duration-500"
+                      } `}
+                  >
+                    <BsChevronDown />
+                  </span>
+                </div>
+              </div>
+
+              {activeStatus.includes("assignments_section") && (
+                <div className="transition-[height] duration-500 ease-in-out">
+                  {courseEntireData.assignments.map((assignment, i) => (
+                    <div
+                      className={`flex gap-3 px-5 py-3 border-b border-gray-100 ${location.pathname.includes(`/assignment/${assignment._id}`)
+                        ? "bg-[#0056D2]/10 font-semibold text-[#0056D2]"
+                        : "hover:bg-gray-100"
+                        } `}
+                      key={i}
+                      onClick={() => {
+                        navigate(`/view-course/${courseEntireData?._id}/assignment/${assignment?._id}`)
+                        setVideoBarActive(`assignment_${assignment._id}`)
+                        courseViewSidebar && window.innerWidth <= 640 ? dispatch(setCourseViewSidebar(false)) : null;
+                      }}
+                    >
+                      <span>📝</span>
+                      {assignment.title}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>

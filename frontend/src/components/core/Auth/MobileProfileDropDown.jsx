@@ -117,13 +117,6 @@ export default function MobileProfileDropDown() {
                         </div>
                     </Link>
 
-                    <Link to='/contact' onClick={() => setOpen(false)}>
-                        <div className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-900 hover:bg-gray-100 ">
-                            <MdOutlineContactPhone className="text-lg" />
-                            Contact Us
-                        </div>
-                    </Link>
-
                     <div
                         onClick={() => {
                             dispatch(logout(navigate))

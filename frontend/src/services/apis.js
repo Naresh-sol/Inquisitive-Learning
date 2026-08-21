@@ -43,6 +43,18 @@ export const courseEndpoints = {
   CREATE_RATING_API: BASE_URL + "/course/createRating",
 }
 
+// ASSIGNMENT ENDPOINTS
+export const assignmentEndpoints = {
+  CREATE_ASSIGNMENT_API: BASE_URL + "/assignment/createAssignment",
+  DELETE_ASSIGNMENT_API: BASE_URL + "/assignment/deleteAssignment",
+  ADD_QUESTION_API: BASE_URL + "/assignment/addQuestion",
+  DELETE_QUESTION_API: BASE_URL + "/assignment/deleteQuestion",
+  SUBMIT_ASSIGNMENT_API: BASE_URL + "/assignment/submitAssignment",
+  GET_STUDENT_SUBMISSIONS_API: BASE_URL + "/assignment/getStudentSubmissions",
+  GET_COURSE_ASSIGNMENTS_API: BASE_URL + "/assignment/getCourseAssignments",
+  GET_ASSIGNMENT_DETAILS_API: BASE_URL + "/assignment/getAssignmentDetails",
+}
+
 // RATINGS AND REVIEWS
 export const ratingsEndpoints = {
   REVIEWS_DETAILS_API: BASE_URL + "/course/getReviews",

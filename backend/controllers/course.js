@@ -123,6 +123,7 @@ exports.getAllCourses = async (req, res) => {
                 path: 'instructor',
                 select: 'firstName lastName email image'
             })
+            .populate('ratingAndReviews')
             .exec();
 
         return res.status(200).json({
@@ -257,6 +258,12 @@ exports.getFullCourseDetails = async (req, res) => {
                 path: "courseContent",
                 populate: {
                     path: "subSection",
+                },
+            })
+            .populate({
+                path: "assignments",
+                populate: {
+                    path: "questions",
                 },
             })
             .exec()

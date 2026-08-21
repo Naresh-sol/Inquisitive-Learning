@@ -4,6 +4,7 @@ import { useSelector } from "react-redux"
 
 import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm"
 import CourseInformationForm from "./CourseInformation/CourseInformationForm"
+import AssignmentBuilderForm from "./AssignmentBuilder/AssignmentBuilderForm"
 import PublishCourse from "./PublishCourse"
 import EditCourse from './../EditCourse/EditCourse';
 
@@ -17,7 +18,8 @@ export default function RenderSteps() {
   const steps = [
     { id: 1, title: "INFO" },
     { id: 2, title: "CURRICULUM" },
-    { id: 3, title: "PUBLISH" },
+    { id: 3, title: "ASSIGNMENT" },
+    { id: 4, title: "PUBLISH" },
   ]
 
   return (
@@ -59,7 +61,8 @@ export default function RenderSteps() {
       {/* Render specific component based on current step */}
       {step === 1 && <CourseInformationForm />}
       {step === 2 && <CourseBuilderForm />}
-      {step === 3 && <PublishCourse />}
+      {step === 3 && <AssignmentBuilderForm />}
+      {step === 4 && <PublishCourse />}
     </>
   )
 }

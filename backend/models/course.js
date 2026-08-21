@@ -48,6 +48,12 @@ const courseSchema = new mongoose.Schema({
             required: true
         }
     ],
+    assignments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Assignment'
+        }
+    ],
     instructions: {
         type: [String]
     },
