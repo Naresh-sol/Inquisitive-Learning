@@ -90,8 +90,11 @@ const Navbar = () => {
                 {/* logo */}
                 <Link to="/" className="flex items-center gap-x-2">
                     <img src={studyNotionLogo} className="w-9 h-9 object-contain" loading='lazy' />
-                    <span className="text-xl font-bold tracking-wide font-inter text-[#0056D2]">
+                    <span className="hidden sm:block text-xl font-bold tracking-wide font-inter text-[#0056D2]">
                         Inquisitive learning
+                    </span>
+                    <span className="block sm:hidden text-base font-bold tracking-wide font-inter text-[#0056D2]">
+                        Inquisitive
                     </span>
                 </Link>
 
@@ -130,7 +133,7 @@ const Navbar = () => {
                         token === null && (
                             <Link to="/login">
                                 {/* <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md focus:outline-8 outline-yellow-50'> */}
-                                <button className={` px-[12px] py-[8px] rounded-md transition-colors font-medium
+                                <button className={`whitespace-nowrap px-[12px] py-[8px] rounded-md transition-colors font-medium
                                  ${matchRoute('/login') ? 'bg-[#0056D2] text-white shadow-md' : 'border border-gray-300 bg-white text-richblack-900 hover:bg-gray-100'} `}
                                 >
                                     Log in
@@ -142,7 +145,7 @@ const Navbar = () => {
                         token === null && (
                             <Link to="/signup">
                                 {/* <button className='border border-richblack-700 bg-richblack-800 px-[12px] py-[8px] text-richblack-100 rounded-md'> */}
-                                <button className={` px-[12px] py-[8px] rounded-md transition-colors font-medium
+                                <button className={`whitespace-nowrap px-[12px] py-[8px] rounded-md transition-colors font-medium
                                  ${matchRoute('/signup') ? 'bg-[#0056D2] text-white shadow-md' : 'border border-gray-300 bg-white text-richblack-900 hover:bg-gray-100'} `}
                                 >
                                     Sign Up
