@@ -109,7 +109,7 @@ const FeaturedCourses = () => {
               {/* Price & Details Row */}
               <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-200">
                 <span className="text-2xl font-bold text-[#0056D2]">
-                  ${course.price}
+                  Rs. {course.price}
                 </span>
                 
                 <Link to={`/courses/${course._id}`}>

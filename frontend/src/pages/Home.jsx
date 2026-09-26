@@ -128,11 +128,7 @@ const Home = () => {
                         With our online coding courses, you can learn at your own pace, from anywhere in the world, and get access to a wealth of resources, including hands-on projects, quizzes, and personalized feedback from instructors.
                     </motion.div>
 
-                    <div className='flex flex-row gap-6 mt-10'>
-                        <CTAButton active={true} linkto={"/signup"}>
-                            <span className='text-base px-2'>Learn More</span>
-                        </CTAButton>
-                    </div>
+
                 </div>
                 </div>
 
@@ -152,20 +148,11 @@ const Home = () => {
                             subheading={
                                 "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
                             }
-                            ctabtn1={
-                                {
-                                    btnText: "try it yourself",
-                                    linkto: "/signup",
-                                    active: true,
-                                }
-                            }
-                            ctabtn2={
-                                {
-                                    btnText: "learn more",
-                                    linkto: "/login",
-                                    active: false,
-                                }
-                            }
+                            ctabtn1={{
+                                btnText: "Explore",
+                                link: "/signup",
+                                active: true,
+                            }}
 
                             codeblock={`<!DOCTYPE html>\n<html>\n<head><title>Example</title>\n</head>\n<body>\n<h1><ahref="/">Header</a>\n</h1>\n<nav><ahref="one/">One</a><ahref="two/">Two</a><ahref="three/">Three</a>\n</nav>`}
                             codeColor={"text-[#0056D2]"}

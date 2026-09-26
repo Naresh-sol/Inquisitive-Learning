@@ -83,7 +83,7 @@ function Course_Card({ course, Height }) {
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <span className="text-richblack-900 font-extrabold text-xl">${course?.price}</span>
+            <span className="text-richblack-900 font-extrabold text-xl">Rs. {course?.price}</span>
             <div className="flex items-center gap-2">
               <button className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-[#0056D2] hover:border-[#0056D2] transition-all bg-gray-50">
                 <FiEye size={14} />

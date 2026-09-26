@@ -24,3 +24,9 @@ dist-ssr
 *.sw?
 
 .env
+.env.*
+
+# Build and Temp folders
+build
+coverage
+tmp

@@ -37,15 +37,19 @@ const CodeBlocks = ({
 
                 {/* Button Group */}
                 <div className="flex gap-6 mt-2">
-                    <CTAButton active={ctabtn1.active} linkto={ctabtn1.link}>
-                        <div className="flex items-center gap-2 text-base">
-                            {ctabtn1.btnText}
-                            <FaArrowRight />
-                        </div>
-                    </CTAButton>
-                    <CTAButton active={ctabtn2.active} linkto={ctabtn2.link}>
-                        <span className="text-base">{ctabtn2.btnText}</span>
-                    </CTAButton>
+                    {ctabtn1 && (
+                        <CTAButton active={ctabtn1.active} linkto={ctabtn1.link || ctabtn1.linkto}>
+                            <div className="flex items-center gap-2 text-base">
+                                {ctabtn1.btnText}
+                                <FaArrowRight />
+                            </div>
+                        </CTAButton>
+                    )}
+                    {ctabtn2 && (
+                        <CTAButton active={ctabtn2.active} linkto={ctabtn2.link || ctabtn2.linkto}>
+                            <span className="text-base">{ctabtn2.btnText}</span>
+                        </CTAButton>
+                    )}
                 </div>
             </div>
 

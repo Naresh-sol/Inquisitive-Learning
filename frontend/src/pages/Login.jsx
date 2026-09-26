@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+
 import { login } from "../services/operations/authAPI";
 import loginImg from "../assets/Images/login.png";
 import { MdOutlineComputer, MdKeyboardArrowDown } from "react-icons/md";
@@ -106,20 +105,7 @@ function Login() {
               </button>
             </form>
 
-            <div className="my-7 flex items-center gap-4">
-              <div className="h-[1px] flex-1 bg-gray-300"></div>
-              <span className="text-sm text-gray-500 font-medium">Or continue with</span>
-              <div className="h-[1px] flex-1 bg-gray-300"></div>
-            </div>
 
-            <div className="flex gap-4">
-              <button className="flex flex-1 items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-2.5 text-gray-800 font-bold hover:bg-gray-50 transition shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400">
-                <FcGoogle size={22} /> Google
-              </button>
-              <button className="flex flex-1 items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white py-2.5 text-gray-800 font-bold hover:bg-gray-50 transition shadow-sm text-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-gray-400">
-                <FaGithub size={22} /> GitHub
-              </button>
-            </div>
           </div>
 
           {/* Right Side: Image */}

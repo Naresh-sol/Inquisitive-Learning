@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiFilter } from 'react-icons/fi';
-import { FaStar, FaRegStar } from 'react-icons/fa';
+import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FilterSidebar = ({ filters, setFilters, handleReset, categories }) => {
@@ -132,6 +132,8 @@ const FilterSidebar = ({ filters, setFilters, handleReset, categories }) => {
                   <span key={star}>
                     {star <= Math.floor(rating.val) ? (
                       <FaStar className="text-yellow-500" size={14} />
+                    ) : star === Math.ceil(rating.val) && !Number.isInteger(rating.val) ? (
+                      <FaStarHalfAlt className="text-yellow-500" size={14} />
                     ) : (
                       <FaRegStar className="text-yellow-500" size={14} />
                     )}

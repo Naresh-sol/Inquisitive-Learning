@@ -9,6 +9,7 @@ import Loading from './../components/common/Loading';
 
 import { getCatalogPageData } from '../services/operations/pageAndComponentData'
 import { fetchCourseCategories, getAllCourses } from './../services/operations/courseDetailsAPI';
+import GetAvgRating from '../utils/avgRating';
 
 function Catalog() {
     const { catalogName } = useParams()
@@ -119,10 +120,7 @@ function Catalog() {
       // Rating Filter
       if (filters.minRating > 0) {
         // Calculate average rating for the course
-        const ratings = c.ratingAndReviews || [];
-        const avgRating = ratings.length > 0 
-          ? ratings.reduce((acc, curr) => acc + curr.rating, 0) / ratings.length 
-          : 0;
+        const avgRating = GetAvgRating(c.ratingAndReviews);
         
         if (avgRating < filters.minRating) return false;
       }
