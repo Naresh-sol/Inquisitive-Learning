@@ -6,7 +6,6 @@ import BannerImage2 from "../assets/Images/aboutus2.webp"
 import BannerImage3 from "../assets/Images/aboutus3.webp"
 
 import Footer from "../components/common/Footer"
-import LearningGrid from "../components/core/AboutPage/LearningGrid"
 import Quote from "../components/core/AboutPage/Quote"
 import StatsComponenet from "../components/core/AboutPage/Stats"
 import HighlightText from "../components/core/HomePage/HighlightText"
@@ -139,10 +138,6 @@ const About = () => {
       </section>
 
       <StatsComponenet />
-
-      <section className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-richblack-900">
-        <LearningGrid />
-      </section>
 
       {/* Reviws from Other Learner */}
       <div className=" my-20 px-5 text-richblack-900 ">

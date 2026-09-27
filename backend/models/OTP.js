@@ -34,7 +34,6 @@ async function sendVerificationEmail(email, otp, name) {
     }
     catch (error) {
         console.log('Error while sending an email to ', email, error);
-        throw error;
     }
 }
 
@@ -44,7 +43,7 @@ OTPSchema.pre('save', async function (next) {
 
     // Only send an email when a new document is created
     if (this.isNew) {
-        await sendVerificationEmail(this.email, this.otp, this.name);
+        sendVerificationEmail(this.email, this.otp, this.name);
     }
     next();
 });
